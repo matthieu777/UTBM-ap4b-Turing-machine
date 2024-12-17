@@ -10,7 +10,7 @@ public class Main {
 
     private static void createAndShowGUI() {
 
-        //test
+        
 
         JFrame frame = new JFrame("Turing Machine");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
