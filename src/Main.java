@@ -21,7 +21,7 @@ public class Main {
 
 
 
-        ImageIcon imageUtbm = new ImageIcon("images/utbmLogo.png");
+        ImageIcon imageUtbm = new ImageIcon("src/images/utbmLogo.png");
         Image image = imageUtbm.getImage();
         Image resizedImage = image.getScaledInstance( imageUtbm.getIconWidth()/2, imageUtbm.getIconHeight()/2, Image.SCALE_SMOOTH);
         imageUtbm = new ImageIcon(resizedImage);
