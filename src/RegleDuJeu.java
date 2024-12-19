@@ -1,14 +1,14 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.*;
 
 
 public class RegleDuJeu {
 
-    private static final String texteRegles = "les regles : ";
+    private final String texteRegles = "les regles : "; 
 
-    public static void afficherRegle() {
+    public void afficherRegle() {
+
+        //frame page regle : 
 
         JFrame frameRegle = new JFrame("Turing Machine / Regles");
         frameRegle.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//ferme uniquement cette fenetre quand on quitte
@@ -16,7 +16,8 @@ public class RegleDuJeu {
         frameRegle.getContentPane().setBackground(new Color(225, 225, 225));
         frameRegle.setLayout(null);
 
-        // bouton retour
+        // bouton retour :
+
         JButton boutonRetour = new JButton("Retour");
         boutonRetour.setBounds(1050, 20, 180, 50);
         boutonRetour.setBackground(new Color(117, 185, 242 ));
@@ -24,14 +25,11 @@ public class RegleDuJeu {
         boutonRetour.setForeground(Color.white);
         boutonRetour.setFont(new Font("Arial", Font.BOLD, 20));
         
-        boutonRetour.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                retour(frameRegle);
-            }
-        });
+        boutonRetour.addActionListener(e -> retour(frameRegle));
 
-        //titre
+
+        //Titre :
+
         JLabel labelTitre = new JLabel("<html><u>Regles du Jeu</u></html>");
         labelTitre.setHorizontalAlignment(JLabel.CENTER);
         labelTitre.setVerticalAlignment(JLabel.CENTER);
@@ -42,6 +40,7 @@ public class RegleDuJeu {
         labelTitre.setBorder(BorderFactory.createLineBorder(new Color(21, 141, 241  ), 6));
         labelTitre.setFont(new Font("Arial", Font.BOLD, 35));
        
+        // texte (les regles) : 
 
         JTextArea texteRegle = new JTextArea();
         texteRegle.setText(texteRegles);
@@ -53,17 +52,17 @@ public class RegleDuJeu {
         texteRegle.setBackground(new Color(117, 185, 242 ));
         
 
-
-        
-
         //ajout des composant : 
+
         frameRegle.add(boutonRetour);
         frameRegle.add(texteRegle);
         frameRegle.add(labelTitre);
         
         frameRegle.setVisible(true);
     }
-
+ 
+    //methodes :
+    
     private static void retour(JFrame frame) {
         frame.dispose();
     }
