@@ -1,10 +1,10 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-
 import javax.swing.ButtonGroup;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -32,8 +32,24 @@ public int genererandom()
 
 public Map<Integer,int[]> genererprobcode() 
 {
+
     Map<Integer, int[]> questionCodeMap = new HashMap<>();
+
     String filePath = "src/texteproblem/texte6.txt";
+    String alternateFilePath = "texteproblem/texte6.txt";
+
+    File file = new File(filePath);
+
+    if (!file.exists()) {
+        filePath = alternateFilePath;
+        file = new File(filePath);
+    }
+
+    if (!file.exists()) {
+        System.err.println("Le fichier contenant les problemes à 6 cartes est introuvable");
+    }
+
+
 
     try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
         String line;
@@ -63,7 +79,21 @@ public Map<Integer,int[]> genererprobcode()
     public Map<Integer,int[]> genererprobid()
     {
         Map<Integer, int[]> questionCardsMap = new HashMap<>();
+
         String filePath = "src/texteproblem/texte6.txt";
+        String alternateFilePath = "texteproblem/texte6.txt";
+
+        File file = new File(filePath);
+
+        if (!file.exists()) {
+            filePath = alternateFilePath;
+            file = new File(filePath);
+        }
+
+        if (!file.exists()) {
+            System.err.println("Le fichier contenant les problemes à 6 cartes est introuvable");
+        }
+
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;

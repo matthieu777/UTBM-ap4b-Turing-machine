@@ -21,19 +21,34 @@ public class MenuJeu {
 
         ImageIcon imageUtbm;
         JLabel label = new JLabel();
+        String filePath = "src/images/utbmLogo.png";
+        String alternateFilePath = "images/utbmLogo.png";
+
         try {
-        imageUtbm = new ImageIcon("src/images/utbmLogo.png");
-        Image image = imageUtbm.getImage();
-        Image resizedImage = image.getScaledInstance( imageUtbm.getIconWidth()/2, imageUtbm.getIconHeight()/2, Image.SCALE_SMOOTH);
-        imageUtbm = new ImageIcon(resizedImage);
-        label.setIcon(imageUtbm);
-        label.setBounds(10, 10, imageUtbm.getIconWidth(), imageUtbm.getIconHeight());
+            imageUtbm = new ImageIcon(filePath);
+            if (imageUtbm.getIconWidth() == -1) { // Vérifie si l'image est invalide
+                throw new Exception("Le chemin  src/images/utbmLogo.png ne marche pas : " + filePath);
+            }
+            
         } catch (Exception e) {
-            imageUtbm = null;
-            System.err.println("Erreur de chargement de l'image : " + e.getMessage());
+            try {
+                imageUtbm = new ImageIcon(alternateFilePath);
+                if (imageUtbm.getIconWidth() == -1) { // Vérifie si l'image est invalide
+                    throw new Exception("Le chemin : images/utbmLogo.png ne marche pas" + alternateFilePath);
+                }
+            } catch (Exception e2) {
+                imageUtbm = null;
+                System.err.println("Erreur de chargement de l'image : " + e2.getMessage());
+            }
+            
          } if (imageUtbm == null) {
             JOptionPane.showMessageDialog(null, "Le chargement de l'image à echoué", "Erreur", JOptionPane.ERROR_MESSAGE);
         } else {
+            Image image = imageUtbm.getImage();
+            Image resizedImage = image.getScaledInstance( imageUtbm.getIconWidth()/2, imageUtbm.getIconHeight()/2, Image.SCALE_SMOOTH);
+            imageUtbm = new ImageIcon(resizedImage);
+            label.setIcon(imageUtbm);
+            label.setBounds(10, 10, imageUtbm.getIconWidth(), imageUtbm.getIconHeight());
             frame.add(label);
         }
 
