@@ -112,14 +112,14 @@ public class MenuJeu {
 
         boutonChoixCarte.addActionListener(e -> selectionCartesBoutonChoixCartes(boutonChoixCarte));
 
-        //bouton valider :
+        //bouton valider/lancer :
 
         JButton boutonLancer = new JButton("Lancer");
         boutonLancer.setBounds(300, 525, 550, 80);
         boutonLancer.setBackground(new Color(51, 170, 3   ));
         boutonLancer.setBorder(BorderFactory.createLineBorder(new Color(38, 120, 4  ), 6));
         boutonLancer.setForeground(Color.white);
-        boutonLancer.setFont(new Font("Arial", Font.BOLD, 20));
+        boutonLancer.setFont(new Font("Arial", Font.BOLD, 28));
 
         boutonLancer.addActionListener(e -> actionBoutonLancerPartie());
 

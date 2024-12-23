@@ -10,6 +10,10 @@ public class Joueur {
         this.nbrEssaie = 0;
     }
 
+    public StringBuffer getNom() {
+        return nom;
+    }
+
     public boolean autorisationJouer(Joueur joueur){
         if(joueur.nbrEssaie < 3){
             return true;
@@ -17,6 +21,7 @@ public class Joueur {
             return false;
         }
     }
-    
+
+   
 
 }

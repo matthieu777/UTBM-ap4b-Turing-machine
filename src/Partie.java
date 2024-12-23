@@ -20,8 +20,8 @@ public class Partie {
         framePartie.setLayout(null);
 
         // afichage test 
-        JLabel textetest = new JLabel("Partie avec " + nombreJoueur + " joueur et " + nombreCarte + " revelateur");
-        textetest.setBounds(200, 150, 900, 50);
+        JLabel textetest = new JLabel("Partie avec " + nombreJoueur + " joueur et " + nombreCarte + " revelateur :");
+        textetest.setBounds(100, 30, 900, 50);
         textetest.setFont(new Font("Arial", Font.PLAIN, 25));
 
         Problem problem;
@@ -47,11 +47,35 @@ public class Partie {
         JComponent[] composants = problem.afficherProbleme();
         framePartie.add(composants[0]);  
 
-        JButton boutonverif=new JButton("Verifier!");
-        boutonverif.setBounds(500, 550, 250, 100);
+        //Bouton selection joueur :
 
-        framePartie.add(boutonverif);
+        GroupeDeJoueur choixJoueur = new GroupeDeJoueur(nombreJoueur);
+        String[] listeNomJoueurs = choixJoueur.getNomsJoueurs();
+
+        JComboBox<String> boutonChoixJoueur = new JComboBox<>(listeNomJoueurs);
+        boutonChoixJoueur.setBounds(100, 550, 350, 90);
+        boutonChoixJoueur.setOpaque(true);
+        boutonChoixJoueur.setBackground(new Color(200, 200, 200 ));
+        boutonChoixJoueur.setBorder(BorderFactory.createLineBorder(new Color(88, 88, 88 ), 6));
+        boutonChoixJoueur.setFont(new Font("Arial", Font.BOLD, 30));
+        //boutonChoixJoueur.addActionListener(e -> selectionCartesBoutonChoixCartes(boutonChoixJoueur));
+
+        //Bouton verification : 
+
+        JButton boutonVerif=new JButton("Verifier");
+        boutonVerif.setBounds(1150, 550, 300, 90);
+        boutonVerif.setOpaque(true);
+        boutonVerif.setBackground(new Color(51, 170, 3 ));
+        boutonVerif.setBorder(BorderFactory.createLineBorder(new Color(38, 120, 4  ), 6));
+        boutonVerif.setFont(new Font("Arial", Font.BOLD, 28));
+        boutonVerif.setForeground(Color.white);
+
+
+        //ajout des composant à la frame : 
+        
+        framePartie.add(boutonVerif);
         framePartie.add(textetest);
+        framePartie.add(boutonChoixJoueur);
         
         framePartie.setVisible(true);
     }
