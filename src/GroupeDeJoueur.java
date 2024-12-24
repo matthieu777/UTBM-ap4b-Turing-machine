@@ -9,7 +9,7 @@ public class GroupeDeJoueur {
     public GroupeDeJoueur(int nombreDeJoueurs) {
         this.nombreDeJoueurs = nombreDeJoueurs;
         for (int i = 1; i <= nombreDeJoueurs; i++) {
-            StringBuffer nom = new StringBuffer("Joueur ").append(i);
+            StringBuffer nom = new StringBuffer("       Joueur ").append(i);
             listDeJoueurs.add(new Joueur(nom, i));
         }
     }

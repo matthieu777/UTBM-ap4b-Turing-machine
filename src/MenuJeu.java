@@ -15,6 +15,7 @@ public class MenuJeu {
         frame.setSize(1300, 750);
         frame.getContentPane().setBackground(new Color(225, 225, 225));
         frame.setLayout(null);
+        frame.setLocationRelativeTo(null);
 
 
         //Image logo utbm :
@@ -55,7 +56,7 @@ public class MenuJeu {
         //Bouton quitter : 
 
         JButton boutonQuitter = new JButton("Quitter");
-        boutonQuitter.setBounds(1050, 20, 180, 50);
+        boutonQuitter.setBounds(1050, 20, 180, 60);
         boutonQuitter.setBackground(new Color(250, 85, 85));
         boutonQuitter.setBorder(BorderFactory.createLineBorder(new Color(181, 44, 44 ), 6));
         boutonQuitter.setForeground(Color.white);
@@ -67,7 +68,7 @@ public class MenuJeu {
         //Bouton regle : 
 
         JButton boutonRegle = new JButton("Regles");
-        boutonRegle.setBounds(850, 20, 180, 50);
+        boutonRegle.setBounds(850, 20, 180, 60);
         boutonRegle.setBackground(new Color(117, 185, 242 ));
         boutonRegle.setBorder(BorderFactory.createLineBorder(new Color(21, 141, 241  ), 6));
         boutonRegle.setForeground(Color.white);
