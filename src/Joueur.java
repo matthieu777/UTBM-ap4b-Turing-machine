@@ -14,6 +14,10 @@ public class Joueur {
         return nom;
     }
 
+    public void setNom(StringBuffer nouveauNom) {
+        this.nom = nouveauNom;
+    }
+
     public boolean autorisationJouer(Joueur joueur){
         if(joueur.nbrEssaie < 3){
             return true;

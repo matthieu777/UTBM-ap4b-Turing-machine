@@ -6,9 +6,11 @@ public class TimerHorloge {
     private int heures = 0, minutes = 0, secondes = 0;
     private Timer timer;
     private TimerListener listener;
+    private boolean actif;
 
     public TimerHorloge() {
         debut(); //debut du timer a la creation
+        actif = false;
     }
 
     
@@ -17,9 +19,11 @@ public class TimerHorloge {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                incrementerTemps();
-                if (listener != null) {
-                    listener.onTimeUpdated(getTemps());
+                if (!actif) {
+                    incrementerTemps();
+                    if (listener != null) {
+                        listener.onTimeUpdated(getTemps());
+                    }
                 }
             }
         }, 0, 1000);
@@ -42,6 +46,16 @@ public class TimerHorloge {
     //temps de facon formate
     public String getTemps() {
         return String.format("%02d:%02d:%02d", heures, minutes, secondes);
+    }
+
+    public void pause() {
+        actif = true;
+    }
+
+    public void relancer() {
+        if (actif) {
+            actif = false;
+        }
     }
 
     //timer qui observe les maj

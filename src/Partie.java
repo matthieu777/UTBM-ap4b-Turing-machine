@@ -56,26 +56,7 @@ public class Partie {
 
         boutonQuitter.addActionListener(e -> quitter(framePartie,timer));
 
-        //Bouton parametre : 
-
-        JButton boutonParametre = new JButton("Paramètres");
-        boutonParametre.setBounds(1100, 40, 180, 60);
-        boutonParametre.setBackground(new Color(117, 185, 242 ));
-        boutonParametre.setBorder(BorderFactory.createLineBorder(new Color(21, 141, 241 ), 6));
-        boutonParametre.setForeground(Color.white);
-        boutonParametre.setFont(new Font("Arial", Font.BOLD, 20));
-
-        Parametres parametres = new Parametres();
-
-        boutonParametre.addActionListener(e -> { try{ parametres.afficherParametres(); } catch (Exception ex) {
-            JOptionPane.showMessageDialog(
-            null,
-            "Erreur : affichage des parametres : " + ex.getMessage(),
-            "Erreur",
-            JOptionPane.ERROR_MESSAGE
-        ); }
-        });
-        
+       
 
         // affichage du probleme : 
 
@@ -98,6 +79,27 @@ public class Partie {
         boutonChoixJoueur.setFont(new Font("Arial", Font.BOLD, 30));
 
         boutonChoixJoueur.addActionListener(e -> selectionJoueurBoutonChoixJoueurs(boutonChoixJoueur, choixJoueur));
+
+         //Bouton parametre : 
+
+         JButton boutonParametre = new JButton("Paramètres");
+         boutonParametre.setBounds(1100, 40, 180, 60);
+         boutonParametre.setBackground(new Color(117, 185, 242 ));
+         boutonParametre.setBorder(BorderFactory.createLineBorder(new Color(21, 141, 241 ), 6));
+         boutonParametre.setForeground(Color.white);
+         boutonParametre.setFont(new Font("Arial", Font.BOLD, 20));
+ 
+         Parametres parametres = new Parametres();
+ 
+         boutonParametre.addActionListener(e -> { try{ parametres.afficherParametres(timer, joueurSelectionne, boutonChoixJoueur, this); } catch (Exception ex) {
+             JOptionPane.showMessageDialog(
+             null,
+             "Erreur : affichage des parametres : " + ex.getMessage(),
+             "Erreur",
+             JOptionPane.ERROR_MESSAGE
+         ); }
+         });
+         
 
         //Bouton pour lancer la verification : 
 
@@ -176,6 +178,12 @@ public class Partie {
     }
 
 
+
+    public void updateJoueurList(JComboBox<String> comboBox) {
+        // Mettre à jour la liste déroulante avec les nouveaux noms de joueurs
+        String[] listeNomJoueurs = choixJoueur.getNomsJoueurs(); // récupérer les noms des joueurs
+        comboBox.setModel(new DefaultComboBoxModel<>(listeNomJoueurs)); // Met à jour le modèle de la comboBox
+    }
 
 
     
