@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -5,10 +6,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.plaf.basic.BasicRadioButtonUI;
 
 public class Problem_4_cartes extends Problem {
 
@@ -145,20 +149,38 @@ public Map<Integer,int[]> genererprobcode()
         System.out.println("");
         /*************************************************************************** */
 
-         ButtonGroup group = new ButtonGroup();//pour gerer les radiobuttons
+        ButtonGroup group = new ButtonGroup();//pour gerer les radiobuttons
 
         JPanel panneau = new JPanel();
         panneau.setLayout(null);
-        panneau.setBounds(70, 200, 1100, 800);
+        panneau.setBounds(175, 200, 1150, 300);
         panneau.setOpaque(false);
+
         
         CarteCritere carte1 = BaseDeCartes.getCarte(idcartes[0]);
         JComponent[] composants1 = carte1.afficherCarte(0, 0);
         panneau.add(composants1[0]);
         panneau.add(composants1[1]); 
         
-        JRadioButton rb1 = new JRadioButton();
-        rb1.setBounds(90, 200, 20, 20);
+        JRadioButton rb1 = new JRadioButton(){
+            @Override                   //pour avoir un bouton carre
+            public void updateUI() {
+                setUI(new BasicRadioButtonUI() {
+                    @Override
+                    public void paint(Graphics g, JComponent c) {
+                        AbstractButton b = (AbstractButton) c;
+                        ButtonModel model = b.getModel();
+                
+                        Graphics2D g2 = (Graphics2D) g;
+                        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                        g2.setColor(model.isSelected() ? new Color(60, 60, 60 ) : new Color(245, 245, 245 ));
+                        g2.fillRect(0, 0, 18, 18);                     
+                        
+                    }
+                });
+            }
+        };
+        rb1.setBounds(90, 200, 18, 18);
         group.add(rb1);
         panneau.add(rb1);
 
@@ -168,8 +190,25 @@ public Map<Integer,int[]> genererprobcode()
         panneau.add(composants2[0]);
         panneau.add(composants2[1]);
         
-        JRadioButton rb2 = new JRadioButton();
-        rb2.setBounds(390, 200, 20, 20);
+        JRadioButton rb2 = new JRadioButton(){
+            @Override                   //pour avoir un bouton carre
+            public void updateUI() {
+                setUI(new BasicRadioButtonUI() {
+                    @Override
+                    public void paint(Graphics g, JComponent c) {
+                        AbstractButton b = (AbstractButton) c;
+                        ButtonModel model = b.getModel();
+                
+                        Graphics2D g2 = (Graphics2D) g;
+                        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                        g2.setColor(model.isSelected() ? new Color(60, 60, 60 ) : new Color(245, 245, 245 ));
+                        g2.fillRect(0, 0, 18, 18);                     
+                        
+                    }
+                });
+            }
+        };
+        rb2.setBounds(390, 200, 18, 18);
         group.add(rb2);
         panneau.add(rb2);
 
@@ -178,8 +217,25 @@ public Map<Integer,int[]> genererprobcode()
         panneau.add(composants3[0]);
         panneau.add(composants3[1]);
 
-        JRadioButton rb3 = new JRadioButton();
-        rb3.setBounds(690, 200, 20, 20);
+        JRadioButton rb3 = new JRadioButton(){
+            @Override                   //pour avoir un bouton carre
+            public void updateUI() {
+                setUI(new BasicRadioButtonUI() {
+                    @Override
+                    public void paint(Graphics g, JComponent c) {
+                        AbstractButton b = (AbstractButton) c;
+                        ButtonModel model = b.getModel();
+                
+                        Graphics2D g2 = (Graphics2D) g;
+                        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                        g2.setColor(model.isSelected() ? new Color(60, 60, 60 ) : new Color(245, 245, 245 ));
+                        g2.fillRect(0, 0, 18, 18);                     
+                        
+                    }
+                });
+            }
+        };
+        rb3.setBounds(690, 200, 18, 18);
         group.add(rb3);
         panneau.add(rb3);
 
@@ -189,8 +245,27 @@ public Map<Integer,int[]> genererprobcode()
         panneau.add(composants4[0]);
         panneau.add(composants4[1]);
 
-        JRadioButton rb4 = new JRadioButton();
-        rb4.setBounds(990, 200, 20, 20);
+        JRadioButton rb4 = new JRadioButton() {
+            @Override                   //pour avoir un bouton carre
+            public void updateUI() {
+                setUI(new BasicRadioButtonUI() {
+                    @Override
+                    public void paint(Graphics g, JComponent c) {
+                        AbstractButton b = (AbstractButton) c;
+                        ButtonModel model = b.getModel();
+                
+                        Graphics2D g2 = (Graphics2D) g;
+                        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                        g2.setColor(model.isSelected() ? new Color(60, 60, 60 ) : new Color(245, 245, 245 ));
+                        g2.fillRect(0, 0, 18, 18);                     
+                        
+                    }
+                });
+            }
+        };
+        rb4.setBounds(990, 200, 18, 18);
+        
+
         group.add(rb4);
         panneau.add(rb4);
 

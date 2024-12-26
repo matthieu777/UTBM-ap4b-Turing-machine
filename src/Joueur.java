@@ -14,6 +14,10 @@ public class Joueur {
         return nom;
     }
 
+    public int getnbrEssaie(){
+        return nbrEssaie; 
+    } 
+
     public void setNom(StringBuffer nouveauNom) {
         this.nom = nouveauNom;
     }

@@ -154,7 +154,7 @@ public Map<Integer,int[]> genererprobcode()
 
         JPanel panneau = new JPanel();
         panneau.setLayout(null);
-        panneau.setBounds(70, 200, 1700, 800);
+        panneau.setBounds(165, 200, 1700, 800);
         panneau.setOpaque(false);
         
         CarteCritere carte1 = BaseDeCartes.getCarte(idcartes[0]);

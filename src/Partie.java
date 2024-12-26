@@ -80,6 +80,12 @@ public class Partie {
 
         boutonChoixJoueur.addActionListener(e -> selectionJoueurBoutonChoixJoueurs(boutonChoixJoueur, choixJoueur));
 
+        //affichage nombre d'essaie
+
+        JLabel texteNbrEssaie = new JLabel("Nombre essaie : "+ joueurSelectionne.getnbrEssaie() +"/3");
+        texteNbrEssaie.setBounds(120, 610, 300, 50);
+        texteNbrEssaie.setFont(new Font("Arial", Font.BOLD, 15));
+
          //Bouton parametre : 
 
          JButton boutonParametre = new JButton("Paramètres");
@@ -120,6 +126,7 @@ public class Partie {
         framePartie.add(boutonQuitter);
         framePartie.add(boutonVerif);
         framePartie.add(boutonChoixJoueur);
+        framePartie.add(texteNbrEssaie);
         
         
         framePartie.setVisible(true);
@@ -180,9 +187,9 @@ public class Partie {
 
 
     public void updateJoueurList(JComboBox<String> comboBox) {
-        // Mettre à jour la liste déroulante avec les nouveaux noms de joueurs
-        String[] listeNomJoueurs = choixJoueur.getNomsJoueurs(); // récupérer les noms des joueurs
-        comboBox.setModel(new DefaultComboBoxModel<>(listeNomJoueurs)); // Met à jour le modèle de la comboBox
+        //maj de liste de joueur apres changement de nom
+        String[] listeNomJoueurs = choixJoueur.getNomsJoueurs();
+        comboBox.setModel(new DefaultComboBoxModel<>(listeNomJoueurs));
     }
 
 
