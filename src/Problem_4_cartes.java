@@ -209,8 +209,6 @@ public JComponent[] afficherProbleme(int nbprob) {
     return new JComponent[]{panneau};
 }
 
-    
-    
 
     public int[] getCode()
     {

@@ -161,15 +161,13 @@ public JComponent[] afficherProbleme(int nbprob) {
     panneau.setOpaque(false);
 
      // Position des cartes
-     int offsetX = 300; // Decalage horizontal entre les cartes
+     int offsetX = 240; // Decalage horizontal entre les cartes
      int offsetY = 0;   // Decalage vertical entre les cartes
      int positionybouton = 200; // decalage entre les cartes et les boutons
      int taillebouton = 18;
 
-    // Create dynamic buttons and cards
     JRadioButton[] buttons = new JRadioButton[idcartes.length];
     for (int i = 0; i < idcartes.length; i++) {
-        // Fetch the card and its components
         CarteCritere carte = BaseDeCartes.getCarte(idcartes[i]);
         int xPosition = i * offsetX;
 
@@ -177,7 +175,6 @@ public JComponent[] afficherProbleme(int nbprob) {
         panneau.add(composants[0]);
         panneau.add(composants[1]);
 
-        // Create and customize the radio button
         JRadioButton radioButton = new JRadioButton() {
             @Override
             public void updateUI() {
@@ -200,7 +197,6 @@ public JComponent[] afficherProbleme(int nbprob) {
         group.add(radioButton);
         panneau.add(radioButton);
 
-        // Save button reference
         buttons[i] = radioButton;
     }
 
