@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class RegleDuJeu {
 
-    private final String texteRegles = "les regles : "; 
+    private final String texteRegles = "les regles : Devinez un code de 3 chiffres"; 
 
     public void afficherRegle() {
 

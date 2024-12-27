@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.util.Random;
+
 import javax.swing.*;
 
 
@@ -22,7 +24,8 @@ public class Partie {
 
     public void afficherPartie() {
 
-        JFrame framePartie = new JFrame("Turing Machine / Partie");
+        int nbprob=genererandom();
+        JFrame framePartie = new JFrame("Turing Machine / Partie avec problem numero " + nbprob);
         framePartie.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         framePartie.setSize(2000, 750);
         framePartie.getContentPane().setBackground(new Color(225, 225, 225));
@@ -45,8 +48,14 @@ public class Partie {
         labelTemps.setFont(new Font("Arial", Font.BOLD, 40));
         labelTemps.setBounds(30, 15, 250, 90);
 
-        //Bouton quitter : 
+        // affichage du probleme : 
 
+        problem = changementProblemNbrCarte(nombreCarte);//creer un probleme de la taille voulue
+        System.out.println("Joueur sélectionné : " + joueurSelectionne.getNom());
+        JComponent[] composants = problem.afficherProbleme(nbprob);
+        framePartie.add(composants[0]);  
+
+        //Bouton quitter : 
         JButton boutonQuitter = new JButton("Quitter");
         boutonQuitter.setBounds(1300, 40, 180, 60);
         boutonQuitter.setBackground(new Color(250, 85, 85));
@@ -54,17 +63,11 @@ public class Partie {
         boutonQuitter.setForeground(Color.white);
         boutonQuitter.setFont(new Font("Arial", Font.BOLD, 20));
 
-        boutonQuitter.addActionListener(e -> quitter(framePartie,timer));
+        boutonQuitter.addActionListener(e -> quitter(framePartie,timer,problem));
 
        
 
-        // affichage du probleme : 
-
-        problem = changementProblemNbrCarte(nombreCarte);//creer un probleme de la taille voulue
-
-        System.out.println("Joueur sélectionné : " + joueurSelectionne.getNom());
-        JComponent[] composants = problem.afficherProbleme();
-        framePartie.add(composants[0]);  
+        
 
         //Bouton selection joueur :
 
@@ -157,7 +160,7 @@ public class Partie {
         }
     }
 
-    private static void quitter(JFrame framePartie, TimerHorloge timer) {
+    private static void quitter(JFrame framePartie, TimerHorloge timer,Problem problem) {
 
         int choix = JOptionPane.showConfirmDialog(
             framePartie,
@@ -166,9 +169,10 @@ public class Partie {
             JOptionPane.YES_NO_OPTION
         ); 
         if (choix == JOptionPane.YES_OPTION) {
+            int [] coderecup=problem.getCode();
             int choix2 = JOptionPane.showOptionDialog(
                 framePartie,
-                "La solution etait : ",
+                "La solution etait : "+ coderecup[0]+ coderecup[1]+ coderecup[2] ,
                 "Solution",
                 JOptionPane.DEFAULT_OPTION, 
                 JOptionPane.INFORMATION_MESSAGE,
@@ -191,6 +195,14 @@ public class Partie {
         String[] listeNomJoueurs = choixJoueur.getNomsJoueurs();
         comboBox.setModel(new DefaultComboBoxModel<>(listeNomJoueurs));
     }
+
+    public int genererandom()
+{
+    int nombre;
+    Random rand = new Random();
+    nombre = rand.nextInt(6);  // Genere une nombre entre 0 et 5
+    return nombre;
+}
 
 
     

@@ -16,23 +16,21 @@ import javax.swing.plaf.basic.BasicRadioButtonUI;
 
 public class Problem_4_cartes extends Problem {
 
+
+
+
+
     private CarteCritere[] listeCartes = new CarteCritere[4];
-    Map<Integer, int[]> probEtId = new HashMap<>(); // key= numero de problem  value:id des cartes criteres
-    Map<Integer, int[]> probEtCode = new HashMap<>(); // key= numero de problem  value:code
+    private Map<Integer, int[]> probEtId = new HashMap<>(); // key= numero de problem  value:id des cartes criteres
+    private Map<Integer, int[]> probEtCode = new HashMap<>(); // key= numero de problem  value:code
     
     int nbprob;
     int[] idcartes;
     int[] code;
 
+    
 
 
-public int genererandom()
-{
-    int nombre;
-    Random rand = new Random();
-    nombre = rand.nextInt(6);  // Genere une nombre entre 0 et 5
-    return nombre;
-}
 
 public Map<Integer,int[]> genererprobcode() 
 {
@@ -122,13 +120,13 @@ public Map<Integer,int[]> genererprobcode()
 
 
     @Override
-    public JComponent[] afficherProbleme() {
-        nbprob=genererandom(); //generer le numero de probleme au random
-        System.out.println("nbprob="+nbprob);
-        probEtId=genererprobid();//generer un map contenant un problemes et les id des cartes
-        probEtCode=genererprobcode();//generer un map contenant un problemes et le code concerne
+public JComponent[] afficherProbleme(int nbprob) {
+    System.out.println("nbprob=" + nbprob);
 
-        //test afficher
+    probEtId = genererprobid();
+    probEtCode = genererprobcode();
+
+           //test afficher
         /*************************************************************************** */
         idcartes=probEtId.get(nbprob);//Recuperer les id depuis le map
         //afficher les ids
@@ -149,131 +147,73 @@ public Map<Integer,int[]> genererprobcode()
         System.out.println("");
         /*************************************************************************** */
 
-        ButtonGroup group = new ButtonGroup();//pour gerer les radiobuttons
+    ButtonGroup group = new ButtonGroup();// Pour gerer les radio buttons
+    JPanel panneau = new JPanel();
+    panneau.setLayout(null);
+    panneau.setBounds(140, 200, 1200, 300);
+    panneau.setOpaque(false);
 
-        JPanel panneau = new JPanel();
-        panneau.setLayout(null);
-        panneau.setBounds(175, 200, 1150, 300);
-        panneau.setOpaque(false);
+    // Position des cartes
+    int offsetX = 300; // Decalage horizontal entre les cartes
+    int offsetY = 0;   // Decalage vertical entre les cartes
+    int positionybouton = 200; // decalage entre les cartes et les boutons
+    int taillebouton = 18;
 
-        
-        CarteCritere carte1 = BaseDeCartes.getCarte(idcartes[0]);
-        JComponent[] composants1 = carte1.afficherCarte(0, 0);
-        panneau.add(composants1[0]);
-        panneau.add(composants1[1]); 
-        
-        JRadioButton rb1 = new JRadioButton(){
-            @Override                   //pour avoir un bouton carre
+    JRadioButton[] buttons = new JRadioButton[idcartes.length];
+    for (int i = 0; i < idcartes.length; i++) {
+        // Recuperer les cartes
+        CarteCritere carte = BaseDeCartes.getCarte(idcartes[i]);
+        int xPositioncarte = i * offsetX;
+
+        JComponent[] composants = carte.afficherCarte(xPositioncarte, offsetY);
+        panneau.add(composants[0]);
+        panneau.add(composants[1]);
+
+        // Create and customize the radio button
+        JRadioButton radioButton = new JRadioButton() {
+            @Override
             public void updateUI() {
                 setUI(new BasicRadioButtonUI() {
                     @Override
                     public void paint(Graphics g, JComponent c) {
                         AbstractButton b = (AbstractButton) c;
                         ButtonModel model = b.getModel();
-                
+
                         Graphics2D g2 = (Graphics2D) g;
                         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                        g2.setColor(model.isSelected() ? new Color(60, 60, 60 ) : new Color(245, 245, 245 ));
-                        g2.fillRect(0, 0, 18, 18);                     
-                        
+                        g2.setColor(model.isSelected() ? new Color(60, 60, 60) : new Color(245, 245, 245));
+                        g2.fillRect(0, 0, taillebouton, taillebouton); 
                     }
                 });
             }
         };
-        rb1.setBounds(90, 200, 18, 18);
-        group.add(rb1);
-        panneau.add(rb1);
 
+        radioButton.setBounds(xPositioncarte + 90, positionybouton, taillebouton, taillebouton);
+        group.add(radioButton);
+        panneau.add(radioButton);
 
-        CarteCritere carte2 = BaseDeCartes.getCarte(idcartes[1]);
-        JComponent[] composants2 = carte2.afficherCarte(300, 0);
-        panneau.add(composants2[0]);
-        panneau.add(composants2[1]);
-        
-        JRadioButton rb2 = new JRadioButton(){
-            @Override                   //pour avoir un bouton carre
-            public void updateUI() {
-                setUI(new BasicRadioButtonUI() {
-                    @Override
-                    public void paint(Graphics g, JComponent c) {
-                        AbstractButton b = (AbstractButton) c;
-                        ButtonModel model = b.getModel();
-                
-                        Graphics2D g2 = (Graphics2D) g;
-                        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                        g2.setColor(model.isSelected() ? new Color(60, 60, 60 ) : new Color(245, 245, 245 ));
-                        g2.fillRect(0, 0, 18, 18);                     
-                        
-                    }
-                });
-            }
-        };
-        rb2.setBounds(390, 200, 18, 18);
-        group.add(rb2);
-        panneau.add(rb2);
+        // Save button reference
+        buttons[i] = radioButton;
+    }
 
-        CarteCritere carte3 = BaseDeCartes.getCarte(idcartes[2]);
-        JComponent[] composants3 = carte3.afficherCarte(600, 0);
-        panneau.add(composants3[0]);
-        panneau.add(composants3[1]);
+    JRadioButton rb1 = buttons[0];
+    JRadioButton rb2 = buttons[1];
+    JRadioButton rb3 = buttons[2];
+    JRadioButton rb4 = buttons[3]; 
 
-        JRadioButton rb3 = new JRadioButton(){
-            @Override                   //pour avoir un bouton carre
-            public void updateUI() {
-                setUI(new BasicRadioButtonUI() {
-                    @Override
-                    public void paint(Graphics g, JComponent c) {
-                        AbstractButton b = (AbstractButton) c;
-                        ButtonModel model = b.getModel();
-                
-                        Graphics2D g2 = (Graphics2D) g;
-                        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                        g2.setColor(model.isSelected() ? new Color(60, 60, 60 ) : new Color(245, 245, 245 ));
-                        g2.fillRect(0, 0, 18, 18);                     
-                        
-                    }
-                });
-            }
-        };
-        rb3.setBounds(690, 200, 18, 18);
-        group.add(rb3);
-        panneau.add(rb3);
+    panneau.setComponentZOrder(rb1, 0);
+    panneau.setComponentZOrder(rb2, 0);
+    panneau.setComponentZOrder(rb3, 0);
+    panneau.setComponentZOrder(rb4, 0);
 
+    return new JComponent[]{panneau};
+}
 
-        CarteCritere carte4 = BaseDeCartes.getCarte(idcartes[3]);
-        JComponent[] composants4 = carte4.afficherCarte(900, 0);
-        panneau.add(composants4[0]);
-        panneau.add(composants4[1]);
+    
+    
 
-        JRadioButton rb4 = new JRadioButton() {
-            @Override                   //pour avoir un bouton carre
-            public void updateUI() {
-                setUI(new BasicRadioButtonUI() {
-                    @Override
-                    public void paint(Graphics g, JComponent c) {
-                        AbstractButton b = (AbstractButton) c;
-                        ButtonModel model = b.getModel();
-                
-                        Graphics2D g2 = (Graphics2D) g;
-                        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                        g2.setColor(model.isSelected() ? new Color(60, 60, 60 ) : new Color(245, 245, 245 ));
-                        g2.fillRect(0, 0, 18, 18);                     
-                        
-                    }
-                });
-            }
-        };
-        rb4.setBounds(990, 200, 18, 18);
-        
-
-        group.add(rb4);
-        panneau.add(rb4);
-
-        panneau.setComponentZOrder(rb1, 0); // Bring rb1 to the front
-        panneau.setComponentZOrder(rb2, 0);
-        panneau.setComponentZOrder(rb3, 0);
-        panneau.setComponentZOrder(rb4, 0);
-        
-        return new JComponent[] { panneau };
+    public int[] getCode()
+    {
+        return code; 
     }
 }

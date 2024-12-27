@@ -5,10 +5,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.plaf.basic.BasicRadioButtonUI;
 
 public class Problem_6_cartes extends Problem {
 
@@ -122,120 +126,107 @@ public Map<Integer,int[]> genererprobcode()
     }
 
 
-    
     @Override
-    public JComponent[] afficherProbleme() {
+public JComponent[] afficherProbleme(int nbprob) {
+    System.out.println("nbprob=" + nbprob);
 
-      nbprob=genererandom(); //generer le numero de probleme au random
-      System.out.println("nbprob="+nbprob);
-      probEtId=genererprobid();//generer un map contenant un problemes et les id des cartes
-      probEtCode=genererprobcode();//generer un map contenant un problemes et le code concerne
+    probEtId = genererprobid();
+    probEtCode = genererprobcode();
 
-      //test afficher
-      /*************************************************************************** */
-      idcartes=probEtId.get(nbprob);//Recuperer les id depuis le map
-      //afficher les ids
-      System.out.print("id cartes= " );
-      for(int i=0;i<idcartes.length;i++)
-      {
-          System.out.print( idcartes[i] + " ");
-      } 
-      System.out.println("" );
+          //test afficher
+        /*************************************************************************** */
+        idcartes=probEtId.get(nbprob);//Recuperer les id depuis le map
+        //afficher les ids
+        System.out.print("id cartes= " );
+        for(int i=0;i<idcartes.length;i++)
+        {
+            System.out.print( idcartes[i] + " ");
+        } 
+        System.out.println("" );
 
-      //afficher les code
-      System.out.print("code= " );
-       code = probEtCode.get(nbprob); //Recuperer le code depuis le map
-          for(int i = 0; i < code.length; i++)
-          {
-               System.out.print(code[i] + " ");
-          }
-      System.out.println("");
-      /*************************************************************************** */
+        //afficher les code
+        System.out.print("code= " );
+        code = probEtCode.get(nbprob); //Recuperer le code depuis le map
+            for(int i = 0; i < code.length; i++)
+            {
+                 System.out.print(code[i] + " ");
+            }
+        System.out.println("");
+        /*************************************************************************** */
 
-        ButtonGroup group = new ButtonGroup();//pour gerer les radiobuttons
+    ButtonGroup group = new ButtonGroup();
+    JPanel panneau = new JPanel();
+    panneau.setLayout(null);
+    panneau.setBounds(50, 200, 1800, 300);
+    panneau.setOpaque(false);
 
+     // Position des cartes
+     int offsetX = 300; // Decalage horizontal entre les cartes
+     int offsetY = 0;   // Decalage vertical entre les cartes
+     int positionybouton = 200; // decalage entre les cartes et les boutons
+     int taillebouton = 18;
 
-        JPanel panneau = new JPanel();
-        panneau.setLayout(null);
-        panneau.setBounds(35, 200, 1700, 800);
-        panneau.setOpaque(false);
-        
-        CarteCritere carte1 = BaseDeCartes.getCarte(idcartes[0]);
-        JComponent[] composants1 = carte1.afficherCarte(0, 0);
-        panneau.add(composants1[0]);
-        panneau.add(composants1[1]); 
-        JRadioButton rb1 = new JRadioButton();
-        rb1.setBounds(90, 200, 20, 20);
-        rb1.setBorderPainted(true);
-          group.add(rb1);
-        panneau.add(rb1);
+    // Create dynamic buttons and cards
+    JRadioButton[] buttons = new JRadioButton[idcartes.length];
+    for (int i = 0; i < idcartes.length; i++) {
+        // Fetch the card and its components
+        CarteCritere carte = BaseDeCartes.getCarte(idcartes[i]);
+        int xPosition = i * offsetX;
 
-        
-        CarteCritere carte2 = BaseDeCartes.getCarte(idcartes[1]);
-        JComponent[] composants2 = carte2.afficherCarte(250, 0);
-        panneau.add(composants2[0]);
-        panneau.add(composants2[1]);
+        JComponent[] composants = carte.afficherCarte(xPosition, offsetY);
+        panneau.add(composants[0]);
+        panneau.add(composants[1]);
 
-        JRadioButton rb2 = new JRadioButton();
-        rb2.setBounds(340, 200, 20, 20);
-        rb2.setBorderPainted(true);
-        group.add(rb2);
-        panneau.add(rb2);
-        
-        CarteCritere carte3 = BaseDeCartes.getCarte(idcartes[2]);
-        JComponent[] composants3 = carte3.afficherCarte(500, 0);
-        panneau.add(composants3[0]);
-        panneau.add(composants3[1]);
+        // Create and customize the radio button
+        JRadioButton radioButton = new JRadioButton() {
+            @Override
+            public void updateUI() {
+                setUI(new BasicRadioButtonUI() {
+                    @Override
+                    public void paint(Graphics g, JComponent c) {
+                        AbstractButton b = (AbstractButton) c;
+                        ButtonModel model = b.getModel();
 
-        JRadioButton rb3 = new JRadioButton();
-        rb3.setBounds(585, 200, 20, 20);
-        rb3.setBorderPainted(true);
-        group.add(rb3);
-        panneau.add(rb3);
+                        Graphics2D g2 = (Graphics2D) g;
+                        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                        g2.setColor(model.isSelected() ? new Color(60, 60, 60) : new Color(245, 245, 245));
+                        g2.fillRect(0, 0, taillebouton, taillebouton); // Square button
+                    }
+                });
+            }
+        };
 
-        CarteCritere carte4 = BaseDeCartes.getCarte(idcartes[3]);
-        JComponent[] composants4 = carte4.afficherCarte(750, 0);
-        panneau.add(composants4[0]);
-        panneau.add(composants4[1]);
+        radioButton.setBounds(xPosition + 90, positionybouton, taillebouton, taillebouton);
+        group.add(radioButton);
+        panneau.add(radioButton);
 
-        JRadioButton rb4 = new JRadioButton();
-        rb4.setBounds(840, 200, 20, 20);
-        rb4.setBorderPainted(true);
-        group.add(rb4);
-        panneau.add(rb4);
-
-        CarteCritere carte5 = BaseDeCartes.getCarte(idcartes[4]);
-        JComponent[] composants5 = carte5.afficherCarte(1000, 0);
-        panneau.add(composants5[0]);
-        panneau.add(composants5[1]);
-
-        JRadioButton rb5 = new JRadioButton();
-        rb5.setBounds(1090, 200, 20, 20);
-        rb5.setBorderPainted(true);
-        group.add(rb5);
-        panneau.add(rb5);
-
-        CarteCritere carte6 = BaseDeCartes.getCarte(idcartes[5]);
-        JComponent[] composants6 = carte6.afficherCarte(1250, 0);
-        panneau.add(composants6[0]);
-        panneau.add(composants6[1]);
-
-        JRadioButton rb6 = new JRadioButton();
-        rb6.setBounds(1340, 200, 20, 20);
-        rb6.setBorderPainted(true);
-        group.add(rb6);
-        panneau.add(rb6);
+        // Save button reference
+        buttons[i] = radioButton;
+    }
 
 
-        panneau.setComponentZOrder(rb1, 0); // Bring rb1 to the front
-        panneau.setComponentZOrder(rb2, 0);
-        panneau.setComponentZOrder(rb3, 0);
-        panneau.setComponentZOrder(rb4, 0);
-        panneau.setComponentZOrder(rb5, 0);
-        panneau.setComponentZOrder(rb6, 0); 
-        
+    JRadioButton rb1 = buttons[0];
+    JRadioButton rb2 = buttons[1];
+    JRadioButton rb3 = buttons[2];
+    JRadioButton rb4 = buttons[3];
+    JRadioButton rb5 = buttons[4];
+    JRadioButton rb6 = buttons[5]; 
 
-        
-        return new JComponent[] { panneau };
+    //mettre les boutons devant les cartes
+    panneau.setComponentZOrder(rb1, 0);
+    panneau.setComponentZOrder(rb2, 0);
+    panneau.setComponentZOrder(rb3, 0);
+    panneau.setComponentZOrder(rb4, 0);
+    panneau.setComponentZOrder(rb5, 0);
+    panneau.setComponentZOrder(rb6, 0);
+
+    return new JComponent[]{panneau};
+}
+
+
+
+    public int[] getCode()
+    {
+        return code; 
     }
 }
