@@ -12,36 +12,13 @@ public class Verificateur {
     public Verificateur(Problem problem, CarteCritere carte) {
         this.problem = problem;
         this.carte = carte;
-        createAndShowGUI();
     }
 
-    private void createAndShowGUI() {
-        JFrame frame = new JFrame("Vérificateur de Carte");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 200);
+    public void verifierCode(String codeText, JFrame framepartie) {
+        codeProposer = parseCode(codeText);
+        boolean result = verifierCarte();
+        JOptionPane.showMessageDialog(framepartie, "Résultat de la vérification : " + result);
         
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3, 1));
-        
-        JTextField codeField = new JTextField();
-        panel.add(new JLabel("Entrez le code :"));
-        panel.add(codeField);
-        
-        JButton verifyButton = new JButton("Vérifier");
-        panel.add(verifyButton);
-        
-        frame.add(panel);
-        frame.setVisible(true);
-        
-        verifyButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String codeText = codeField.getText();
-                codeProposer = parseCode(codeText);
-                boolean result = verifierCarte();
-                JOptionPane.showMessageDialog(frame, "Résultat de la vérification : " + result);
-            }
-        });
     }
 
     private int[] parseCode(String codeText) {

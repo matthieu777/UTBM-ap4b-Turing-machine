@@ -37,8 +37,6 @@ public class Partie {
         texteTitre.setBounds(300, 15, 900, 90);
         texteTitre.setFont(new Font("Arial", Font.BOLD, 30));
 
-
-
         //timer
 
         timer = new TimerHorloge();
@@ -64,12 +62,7 @@ public class Partie {
 
         boutonQuitter.addActionListener(e -> quitter(framePartie,timer,problem));
 
-       
-
-        
-
         //Bouton selection joueur :
-
 
         String[] listeNomJoueurs = choixJoueur.getNomsJoueurs(); //recupe la liste des noms des joueurs 
 
@@ -111,24 +104,26 @@ public class Partie {
 
         //Champs pour entrer le code :
         
-         JTextField codeField1 = new JTextField(1);
-         codeField1.setBounds(600, 550, 50, 70);
-         codeField1.setFont(new Font("Arial", Font.BOLD, 28));
-         codeField1.setHorizontalAlignment(JTextField.CENTER);
-
-         JTextField codeField2 = new JTextField(1);
-         codeField2.setBounds(660, 550, 50, 70);
-         codeField2.setFont(new Font("Arial", Font.BOLD, 28));
-         codeField2.setHorizontalAlignment(JTextField.CENTER);
-
-         JTextField codeField3 = new JTextField(1);
-         codeField3.setBounds(720, 550, 50, 70);
-         codeField3.setFont(new Font("Arial", Font.BOLD, 28));
-         codeField3.setHorizontalAlignment(JTextField.CENTER);
+        JTextField codeField1 = new JTextField(1);
+        codeField1.setBounds(600, 550, 50, 70);
+        codeField1.setFont(new Font("Arial", Font.BOLD, 28));
+        codeField1.setHorizontalAlignment(JTextField.CENTER);
+    
+        JTextField codeField2 = new JTextField(1);
+        codeField2.setBounds(660, 550, 50, 70);
+        codeField2.setFont(new Font("Arial", Font.BOLD, 28));
+        codeField2.setHorizontalAlignment(JTextField.CENTER);
+    
+        JTextField codeField3 = new JTextField(1);
+        codeField3.setBounds(720, 550, 50, 70);
+        codeField3.setFont(new Font("Arial", Font.BOLD, 28));
+        codeField3.setHorizontalAlignment(JTextField.CENTER);
+    
 
 
         //Bouton pour lancer la verification : 
         CarteCritere carte = BaseDeCartes.getCarte(problem.getCode()[0]);
+        Verificateur verificateur = new Verificateur(problem, carte);
 
         JButton boutonVerif=new JButton("Verifier");
         boutonVerif.setBounds(1150, 550, 290, 70);
@@ -141,14 +136,8 @@ public class Partie {
             String code = codeField1.getText() + codeField2.getText() + codeField3.getText();
             if (code.matches("\\d{3}")) {
                 System.out.println("Code valide : " + code);
-                int[] codeProposer = {
-                    Integer.parseInt(codeField1.getText()),
-                    Integer.parseInt(codeField2.getText()), 
-                    Integer.parseInt(codeField3.getText())
-                };
-                Verificateur verificateur = new Verificateur(problem, carte);
-                boolean result = verificateur.verifierCarte();
-                JOptionPane.showMessageDialog(framePartie, "Résultat de la vérification : " + result);
+                verificateur.verifierCode(code, framePartie);
+                
             } else {
                 JOptionPane.showMessageDialog(framePartie, "Veuillez entrer un code valide", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
@@ -162,6 +151,9 @@ public class Partie {
         framePartie.add(boutonVerif);
         framePartie.add(boutonChoixJoueur);
         framePartie.add(texteNbrEssaie);
+        framePartie.add(codeField1);
+        framePartie.add(codeField2);
+        framePartie.add(codeField3);
         
         
         framePartie.setVisible(true);
