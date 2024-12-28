@@ -108,7 +108,25 @@ public class Partie {
              JOptionPane.ERROR_MESSAGE
          ); }
          });
-         
+
+
+        //Champs pour entrer le code :
+        
+         JTextField codeField1 = new JTextField(1);
+         codeField1.setBounds(600, 550, 50, 70);
+         codeField1.setFont(new Font("Arial", Font.BOLD, 28));
+         codeField1.setHorizontalAlignment(JTextField.CENTER);
+
+         JTextField codeField2 = new JTextField(1);
+         codeField2.setBounds(660, 550, 50, 70);
+         codeField2.setFont(new Font("Arial", Font.BOLD, 28));
+         codeField2.setHorizontalAlignment(JTextField.CENTER);
+
+         JTextField codeField3 = new JTextField(1);
+         codeField3.setBounds(720, 550, 50, 70);
+         codeField3.setFont(new Font("Arial", Font.BOLD, 28));
+         codeField3.setHorizontalAlignment(JTextField.CENTER);
+
 
         //Bouton pour lancer la verification : 
 
@@ -119,7 +137,18 @@ public class Partie {
         boutonVerif.setBorder(BorderFactory.createLineBorder(new Color(38, 120, 4  ), 6));
         boutonVerif.setFont(new Font("Arial", Font.BOLD, 28));
         boutonVerif.setForeground(Color.white);
-
+        boutonVerif.addActionListener(e -> { String code = codeField1.getText() + codeField2.getText() + codeField3.getText();
+        if (code.matches("\\d{3}")) {
+            System.out.println("Code valide : " + code);
+            int[] codeProposer = {Integer.parseInt(codeField1.getText()),
+            Integer.parseInt(codeField2.getText()), Integer.parseInt(codeField3.getText())};
+            Verificateur verificateur = new Verificateur(problem, carte);
+            boolean result = verificateur.verifierCarte();
+            JOptionPane.showMessageDialog(framePartie, "Résultat de la vérification : " + result);}
+        else {
+            JOptionPane.showMessageDialog(framePartie, "Veuillez entrer un code valide", "Erreur", JOptionPane.ERROR_MESSAGE);}
+        
+        });
 
         //ajout des composant à la frame :
 
