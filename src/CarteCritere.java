@@ -51,4 +51,8 @@ public class CarteCritere {
 
         return new JComponent[] { textetest, carre };
     }
+
+    public Critere getCritere() {
+        return critere;
+    }
 }

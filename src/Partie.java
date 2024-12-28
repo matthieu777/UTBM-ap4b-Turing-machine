@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.util.Random;
-
 import javax.swing.*;
 
 
@@ -129,6 +128,7 @@ public class Partie {
 
 
         //Bouton pour lancer la verification : 
+        CarteCritere carte = BaseDeCartes.getCarte(problem.getCode()[0]);
 
         JButton boutonVerif=new JButton("Verifier");
         boutonVerif.setBounds(1150, 550, 290, 70);
@@ -137,21 +137,24 @@ public class Partie {
         boutonVerif.setBorder(BorderFactory.createLineBorder(new Color(38, 120, 4  ), 6));
         boutonVerif.setFont(new Font("Arial", Font.BOLD, 28));
         boutonVerif.setForeground(Color.white);
-        boutonVerif.addActionListener(e -> { String code = codeField1.getText() + codeField2.getText() + codeField3.getText();
-        if (code.matches("\\d{3}")) {
-            System.out.println("Code valide : " + code);
-            int[] codeProposer = {Integer.parseInt(codeField1.getText()),
-            Integer.parseInt(codeField2.getText()), Integer.parseInt(codeField3.getText())};
-            Verificateur verificateur = new Verificateur(problem, carte);
-            boolean result = verificateur.verifierCarte();
-            JOptionPane.showMessageDialog(framePartie, "Résultat de la vérification : " + result);}
-        else {
-            JOptionPane.showMessageDialog(framePartie, "Veuillez entrer un code valide", "Erreur", JOptionPane.ERROR_MESSAGE);}
-        
+        boutonVerif.addActionListener(e -> { 
+            String code = codeField1.getText() + codeField2.getText() + codeField3.getText();
+            if (code.matches("\\d{3}")) {
+                System.out.println("Code valide : " + code);
+                int[] codeProposer = {
+                    Integer.parseInt(codeField1.getText()),
+                    Integer.parseInt(codeField2.getText()), 
+                    Integer.parseInt(codeField3.getText())
+                };
+                Verificateur verificateur = new Verificateur(problem, carte);
+                boolean result = verificateur.verifierCarte();
+                JOptionPane.showMessageDialog(framePartie, "Résultat de la vérification : " + result);
+            } else {
+                JOptionPane.showMessageDialog(framePartie, "Veuillez entrer un code valide", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
         });
-
-        //ajout des composant à la frame :
-
+        
+       
         framePartie.add(texteTitre);
         framePartie.add(labelTemps);
         framePartie.add(boutonParametre);
