@@ -268,7 +268,7 @@ public class Partie {
                 //on essaye d'abord si le code entrer par le joueur est le bon
                 if (Arrays.equals(codeEntrer, problem.getCode())) {
 
-                    JOptionPane.showMessageDialog(framePartie, "Felicitation "+ joueurSelectionne +" vous avez GAGNER!!!! \n La partie a durer :"+timer.getTemps());//affichage 
+                    JOptionPane.showMessageDialog(framePartie, "Felicitation "+ joueurSelectionne.getNom() +" vous avez GAGNER!!!! \n La partie a durer :"+timer.getTemps());//affichage 
                     framePartie.dispose(); //on quitte la partie en cours donc la frame
 
                 } else { //sinon on interoge la carte avec le code proposer
