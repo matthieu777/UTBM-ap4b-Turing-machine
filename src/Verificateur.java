@@ -1,40 +1,26 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Verificateur {
+
+    //constructeur de la classe Verificateur
+    public Verificateur() {
+       
+    }
+
+    //Verification d'un code en fonction d'un code donner et d'une id de carte critere
+    public boolean  verifierCode(int[] codeEntrer, int idCarte) {
+
+        CarteCritere carte = BaseDeCartes.getCarte(idCarte); //on recupere la carte dans la base de carte grace a l'id de la carte
     
-    private int[] codeProposer;
-    private Problem problem;
-    private CarteCritere carte;
-
-    public Verificateur(Problem problem, CarteCritere carte) {
-        this.problem = problem;
-        this.carte = carte;
+        return  verifierCarte(carte, codeEntrer); //on lance la verification sur la carte avec le code donner
+    
     }
 
-    public void verifierCode(String codeText, JFrame framepartie) {
-        codeProposer = parseCode(codeText);
-        boolean result = verifierCarte();
-        JOptionPane.showMessageDialog(framepartie, "Résultat de la vérification : " + result);
-        
-    }
 
-    private int[] parseCode(String codeText) {
-        String[] parts = codeText.split(",");
-        int[] code = new int[parts.length];
-        for (int i = 0; i < parts.length; i++) {
-            code[i] = Integer.parseInt(parts[i].trim());
-        }
-        return code;
-    }
-
-    public boolean verifierCarte() {
-        Critere critere = carte.getCritere();
-        if (codeProposer.length < 3) {
-            return false;
-        }
-        return critere.verifier(codeProposer[0], codeProposer[1], codeProposer[2]);
+    
+    //Methode pour verififier une carte criter selon un carte criter et un code
+    public boolean verifierCarte(CarteCritere carte, int[] code) {
+        Critere critere = carte.getCritere(); //on recupere le critere de la carte
+        return critere.verifier(code[0], code[1], code[2]); //on interoge le critere avec le code donner
     }
 }
+

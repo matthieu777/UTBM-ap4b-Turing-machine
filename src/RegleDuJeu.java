@@ -25,7 +25,7 @@ public class RegleDuJeu {
         boutonRetour.setForeground(Color.white);
         boutonRetour.setFont(new Font("Arial", Font.BOLD, 20));
         
-        boutonRetour.addActionListener(e -> retour(frameRegle));
+        boutonRetour.addActionListener(_ -> retour(frameRegle));
 
 
         //Titre :

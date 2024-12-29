@@ -1,17 +1,19 @@
 import java.awt.*;
-import java.util.Random;
+import java.util.Arrays;
 import javax.swing.*;
 
 
 public class Partie {
     
-    private int nombreJoueur;
-    private int nombreCarte;
-    private GroupeDeJoueur choixJoueur;
+    private final int nombreJoueur;
+    private final int nombreCarte;
+    private final GroupeDeJoueur choixJoueur;
     private Joueur joueurSelectionne;
     private Problem problem;
     private TimerHorloge timer;
-    
+    private int nbprob;
+    private final int[] codeEntrer = new int[3];
+    private JLabel texteNbrEssaie;
 
 
     public Partie(int nombreJoueur, int nombreCarte) {
@@ -23,7 +25,10 @@ public class Partie {
 
     public void afficherPartie() {
 
-        int nbprob=genererandom();
+        problem = changementProblemNbrCarte(nombreCarte); //on initialise un probleme de la taille voulue
+        
+        //frame principale : 
+
         JFrame framePartie = new JFrame("Turing Machine / Partie avec problem numero " + nbprob);
         framePartie.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         framePartie.setSize(2000, 750);
@@ -31,13 +36,13 @@ public class Partie {
         framePartie.setLayout(null);
         framePartie.setLocationRelativeTo(null);
 
-        // afichage titre
+        // afichage d'un titre 
 
-        JLabel texteTitre = new JLabel("<html><u>Partie avec " + nombreJoueur + " joueur et " + nombreCarte + " revelateur :</u></html>");
+        JLabel texteTitre = new JLabel("<html><u>Partie avec " + nombreJoueur + " joueur, " + nombreCarte + " revelateur et le probleme n°" +nbprob+ ":</u></html>");
         texteTitre.setBounds(300, 15, 900, 90);
         texteTitre.setFont(new Font("Arial", Font.BOLD, 30));
 
-        //timer
+        // affichage d'un timer
 
         timer = new TimerHorloge();
         JLabel labelTemps = new JLabel(timer.getTemps());
@@ -47,8 +52,6 @@ public class Partie {
 
         // affichage du probleme : 
 
-        problem = changementProblemNbrCarte(nombreCarte);//creer un probleme de la taille voulue
-        System.out.println("Joueur sélectionné : " + joueurSelectionne.getNom());
         JComponent[] composants = problem.afficherProbleme(nbprob);
         framePartie.add(composants[0]);  
 
@@ -60,7 +63,7 @@ public class Partie {
         boutonQuitter.setForeground(Color.white);
         boutonQuitter.setFont(new Font("Arial", Font.BOLD, 20));
 
-        boutonQuitter.addActionListener(e -> quitter(framePartie,timer,problem));
+        boutonQuitter.addActionListener( _ -> quitter(framePartie,timer,problem));
 
         //Bouton selection joueur :
 
@@ -73,36 +76,36 @@ public class Partie {
         boutonChoixJoueur.setBorder(BorderFactory.createLineBorder(new Color(88, 88, 88 ), 6));
         boutonChoixJoueur.setFont(new Font("Arial", Font.BOLD, 30));
 
-        boutonChoixJoueur.addActionListener(e -> selectionJoueurBoutonChoixJoueurs(boutonChoixJoueur, choixJoueur));
+        boutonChoixJoueur.addActionListener( _ -> selectionJoueurBoutonChoixJoueurs(boutonChoixJoueur, choixJoueur));
 
         //affichage nombre d'essaie
 
-        JLabel texteNbrEssaie = new JLabel("Nombre essaie : "+ joueurSelectionne.getnbrEssaie() +"/3");
+        texteNbrEssaie = new JLabel("Nombre essaie : "+ joueurSelectionne.getnbrEssaie() +"/3");
         texteNbrEssaie.setBounds(120, 610, 300, 50);
         texteNbrEssaie.setFont(new Font("Arial", Font.BOLD, 15));
 
-         //Bouton parametre : 
+        //Bouton parametre : 
 
-         JButton boutonParametre = new JButton("Paramètres");
-         boutonParametre.setBounds(1100, 40, 180, 60);
-         boutonParametre.setBackground(new Color(117, 185, 242 ));
-         boutonParametre.setBorder(BorderFactory.createLineBorder(new Color(21, 141, 241 ), 6));
-         boutonParametre.setForeground(Color.white);
-         boutonParametre.setFont(new Font("Arial", Font.BOLD, 20));
+        JButton boutonParametre = new JButton("Paramètres");
+        boutonParametre.setBounds(1100, 40, 180, 60);
+        boutonParametre.setBackground(new Color(117, 185, 242 ));
+        boutonParametre.setBorder(BorderFactory.createLineBorder(new Color(21, 141, 241 ), 6));
+        boutonParametre.setForeground(Color.white);
+        boutonParametre.setFont(new Font("Arial", Font.BOLD, 20));
  
-         Parametres parametres = new Parametres();
+        Parametres parametres = new Parametres();
  
-         boutonParametre.addActionListener(e -> { try{ parametres.afficherParametres(timer, joueurSelectionne, boutonChoixJoueur, this); } catch (Exception ex) {
-             JOptionPane.showMessageDialog(
-             null,
-             "Erreur : affichage des parametres : " + ex.getMessage(),
-             "Erreur",
-             JOptionPane.ERROR_MESSAGE
-         ); }
-         });
+        boutonParametre.addActionListener( _ -> { try{ parametres.afficherParametres(timer, joueurSelectionne, boutonChoixJoueur, this); } catch (Exception ex) {
+            JOptionPane.showMessageDialog(
+            null,
+            "Erreur : affichage des parametres : " + ex.getMessage(),
+            "Erreur",
+            JOptionPane.ERROR_MESSAGE
+        ); }
+        });
 
 
-        //Champs pour entrer le code :
+        // 3 Champs pour entrer le code :
         
         JTextField codeField1 = new JTextField(1);
         codeField1.setBounds(600, 550, 50, 70);
@@ -120,11 +123,8 @@ public class Partie {
         codeField3.setHorizontalAlignment(JTextField.CENTER);
     
 
-
         //Bouton pour lancer la verification : 
-        CarteCritere carte = BaseDeCartes.getCarte(problem.getCode()[0]);
-        Verificateur verificateur = new Verificateur(problem, carte);
-
+        
         JButton boutonVerif=new JButton("Verifier");
         boutonVerif.setBounds(1150, 550, 290, 70);
         boutonVerif.setOpaque(true);
@@ -132,17 +132,9 @@ public class Partie {
         boutonVerif.setBorder(BorderFactory.createLineBorder(new Color(38, 120, 4  ), 6));
         boutonVerif.setFont(new Font("Arial", Font.BOLD, 28));
         boutonVerif.setForeground(Color.white);
-        boutonVerif.addActionListener(e -> { 
-            String code = codeField1.getText() + codeField2.getText() + codeField3.getText();
-            if (code.matches("\\d{3}")) {
-                System.out.println("Code valide : " + code);
-                verificateur.verifierCode(code, framePartie);
-                
-            } else {
-                JOptionPane.showMessageDialog(framePartie, "Veuillez entrer un code valide", "Erreur", JOptionPane.ERROR_MESSAGE);
-            }
-        });
+        boutonVerif.addActionListener( _ -> methodeButonVerification(framePartie, codeField1, codeField2, codeField3,timer));
         
+        //ajout des composants à la frame 
        
         framePartie.add(texteTitre);
         framePartie.add(labelTemps);
@@ -160,43 +152,63 @@ public class Partie {
     }
 
 
+
+
+    // methodes pour changer le joueur selectioner
+
     private void selectionJoueurBoutonChoixJoueurs(JComboBox<String> comboBox, GroupeDeJoueur choixJoueur) {
-        String selectedOption = (String) comboBox.getSelectedItem();
-    
-        if (selectedOption != null && !selectedOption.isEmpty()) {
-            int indexSelectionne = comboBox.getSelectedIndex();
-            Joueur joueurSelectionne = choixJoueur.getListDeJoueurs().get(indexSelectionne);
-            System.out.println("Joueur selectionne : " + joueurSelectionne.getNom());//affichage console pour verification
+        String selectedOption = (String) comboBox.getSelectedItem(); //recupere en string l'option selection dans le combobox
+
+        if (selectedOption != null && !selectedOption.isEmpty()) { // si la selection n'est pas vide 
+            int indexSelectionne = comboBox.getSelectedIndex(); //recupere l'index du bouton 
+            joueurSelectionne = choixJoueur.getListDeJoueurs().get(indexSelectionne); //recupere le nouveau joueur selectioner grace a l'index 
+            System.out.println("Joueur selectionne : " + joueurSelectionne.getNom()); //affichage dans la console pour verification
+            texteNbrEssaie.setText("Nombre essai : " + joueurSelectionne.getnbrEssaie() + "/3"); //maj afficahge du nombre d'essaie du joueurs
         }
     }
 
+    //methodes utiliser pour genere un probleme de la taille voulue dans le menue
 
     public Problem changementProblemNbrCarte(int nombreCarte) {
-        switch (nombreCarte) {
-            case 4:
-                return new Problem_4_cartes();
-            case 5:
-                return new Problem_5_cartes();
-            case 6:
-                return new Problem_6_cartes();
-            default:
-                return new Problem_4_cartes(); 
-        }
+        return switch (nombreCarte) {
+            case 4 -> {
+                Problem newProblem = new Problem_4_cartes(); //nouveau problem de 4 carte
+                nbprob = newProblem.genererandom(2); //choix au hasard dans la liste de problem a 4 cartes dans le fichier texte
+                yield newProblem;
+            }
+            case 5 -> {
+                Problem newProblem = new Problem_5_cartes();
+                nbprob = newProblem.genererandom(6);
+                yield newProblem;
+            }
+            case 6 -> {
+                Problem newProblem = new Problem_6_cartes();
+                nbprob = newProblem.genererandom(6);
+                yield newProblem;
+            }
+            default -> {
+                Problem newProblem = new Problem_4_cartes();
+                nbprob = newProblem.genererandom(2);
+                yield newProblem;
+            }
+        };
     }
+
+    //methodes pour quitter la partie : 
 
     private static void quitter(JFrame framePartie, TimerHorloge timer,Problem problem) {
 
-        int choix = JOptionPane.showConfirmDialog(
+        int choix = JOptionPane.showConfirmDialog( //boite de dialoge pour proposer de voir le code solution avant de quitter
             framePartie,
             "La partie a durre : "+ timer.getTemps() +"\nVoulez-vous voir la solution avant de quitter ?",
             "Solution",
             JOptionPane.YES_NO_OPTION
         ); 
-        if (choix == JOptionPane.YES_OPTION) {
+        if (choix == JOptionPane.YES_OPTION) { // si l'utilisateur veut voir le code reponse 
             int [] coderecup=problem.getCode();
             int choix2 = JOptionPane.showOptionDialog(
                 framePartie,
-                "La solution etait : "+ coderecup[0]+ coderecup[1]+ coderecup[2] ,
+                "La solution etait : "+ coderecup[0]+ coderecup[1]+ coderecup[2] , //affichafe code reponse
                 "Solution",
                 JOptionPane.DEFAULT_OPTION, 
                 JOptionPane.INFORMATION_MESSAGE,
@@ -207,7 +219,7 @@ public class Partie {
             if (choix2 == JOptionPane.CLOSED_OPTION || choix2 == 0) {
                 framePartie.dispose();
             }
-        } else {
+        } else { //sinon on quitte sans afficher le code reponse
             framePartie.dispose();
         }
     }
@@ -215,21 +227,72 @@ public class Partie {
 
 
     public void updateJoueurList(JComboBox<String> comboBox) {
-        //maj de liste de joueur apres changement de nom
+        //maj de la liste de joueurs apres changement de nom avec le nouveau nom
         String[] listeNomJoueurs = choixJoueur.getNomsJoueurs();
         comboBox.setModel(new DefaultComboBoxModel<>(listeNomJoueurs));
     }
 
-    public int genererandom()
-{
-    int nombre;
-    Random rand = new Random();
-    nombre = rand.nextInt(6);  // Genere une nombre entre 0 et 5
-    return nombre;
-}
 
+    private void methodeButonVerification(JFrame framePartie,JTextField codeField1, JTextField codeField2, JTextField codeField3, TimerHorloge timer) {
 
+        //rzcuperation des 3 nombre entrer par l'utilisateur
+        String text1 = codeField1.getText().trim();
+        String text2 = codeField2.getText().trim();
+        String text3 = codeField3.getText().trim();
+        
+        //recuperation de la carte selectioner
+        int idcartesselectioner = problem.getCartesSelectionne();
+
+        // verification si on a bien les 3 chiffres de rempli et si on a bien une carte selectioner
+        if ((text1.matches("\\d") && text2.matches("\\d") && text3.matches("\\d")) && (problem.getCartesSelectionne() != -1)) {
+            
+            //on mets a jour le code proposer par le joueur
+            codeEntrer[0] = Integer.parseInt(text1);
+            codeEntrer[1] = Integer.parseInt(text2);
+            codeEntrer[2] = Integer.parseInt(text3);
     
+            //affichage console du code entrer et de la carte selectioner pour verification 
+            System.out.println("Code entrer : " + codeEntrer[0] + ", " + codeEntrer[1] + ", " + codeEntrer[2]);    
+            System.out.println("Carte selectionner : " + problem.getCartesSelectionne());
 
+                
+            //verrifie si le joueur a un nbr d'essaie <3 
+            if (joueurSelectionne.autorisationJouer()) {
+    
+                //Si le joueur joue on augmente son nombre d'essais
+                joueurSelectionne.augmentationEssai();
+                texteNbrEssaie.setText("Nombre essai : " + joueurSelectionne.getnbrEssaie() + "/3"); //mise a jour de l'affichage du nombre d'essaie du joueur
+    
+                //System.out.println("nombre essai " + joueurSelectionne + ":" + joueurSelectionne.getnbrEssaie()); //affichage console pour test
+    
+                //on essaye d'abord si le code entrer par le joueur est le bon
+                if (Arrays.equals(codeEntrer, problem.getCode())) {
+
+                    JOptionPane.showMessageDialog(framePartie, "Felicitation "+ joueurSelectionne +" vous avez GAGNER!!!! \n La partie a durer :"+timer.getTemps());//affichage 
+                    framePartie.dispose(); //on quitte la partie en cours donc la frame
+
+                } else { //sinon on interoge la carte avec le code proposer
+                    
+                    Verificateur verificateur = new Verificateur();
+                    boolean resVerification = verificateur.verifierCode(codeEntrer, idcartesselectioner); //on interoge le verificateur
+                    JOptionPane.showMessageDialog(framePartie, "Résultat de la vérification : " + resVerification); //on affiche a l'utilisateur le resultat de la verifiaction
+
+                }
+    
+            } else if (!joueurSelectionne.autorisationJouer() && !choixJoueur.groupePeutJouer()) { //sinon si le joueur ne peut pas joueur et que aucun joueur peut jouer
+               
+                JOptionPane.showMessageDialog(framePartie, "Tous les joueurs ont fait leurs 3 essais. Reinitialisation des essais. Veuillez rejouez");
+                choixJoueur.reinitialiserEssais(); //on remets tous les joueurs à 3 essaies
+
+            } else {
+                //sinon si un joueur du groupe n'a pas 3 essaie et peut jouer on dit au joueur a 3 essaie d'attendre 
+                JOptionPane.showMessageDialog(framePartie, "Vous avez déjà fait vos 3 essais. Attendez que les autres joueurs ont terminés");
+            }
+    
+        } else { //sinon si on a pas 3 chiffres corect et une carte selectioner :
+            JOptionPane.showMessageDialog(null, "Veuillez entrer un code valide et/ou selectionner une carte à interoger", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
 
 }

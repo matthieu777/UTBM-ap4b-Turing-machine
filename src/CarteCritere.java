@@ -7,8 +7,12 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
 public class CarteCritere {
-    private Critere critere;
-    private String texte;
+    
+    //carte composer d'un critere et de texte
+    private final Critere critere; 
+    private final String texte;
+
+    //constructeur de la classe carte critere 
 
     public CarteCritere(String texte, Critere critere) {
         this.critere = critere;
@@ -16,9 +20,12 @@ public class CarteCritere {
     }
 
 
-    
+    //methodes pour afficher une carte afficher au position donner
+
    public JComponent[] afficherCarte(int x, int y) {
     
+        // carre/carte avec un contoure arrondie : 
+
         JPanel carre = new JPanel(){
             @Override
             protected void paintComponent(Graphics g) {
@@ -39,19 +46,23 @@ public class CarteCritere {
         carre.setBounds(x, y, 210, 250);
         carre.setOpaque(false);
         
+        //zone de texte :
+
         JLabel textetest = new JLabel(texte, SwingConstants.CENTER);
         textetest.setVerticalAlignment(SwingConstants.CENTER);
         textetest.setBounds(x+30, y+45, 150, 125);
         textetest.setOpaque(true);
         textetest.setBackground(new Color(102, 102, 102));
-        Border roundedBorder = BorderFactory.createLineBorder(new Color(91, 91, 91), 5, true);
+        Border roundedBorder = BorderFactory.createLineBorder(new Color(91, 91, 91), 5, true); // avoir un bord un peut courber
         textetest.setBorder(roundedBorder);
         textetest.setFont(new Font("Arial", Font.BOLD, 15));
         textetest.setForeground(Color.white);
 
+        //on retourne les composant qui seront a ajouter a la frame 
         return new JComponent[] { textetest, carre };
     }
 
+    //getter pour acceder au critere d'une carte critere
     public Critere getCritere() {
         return critere;
     }

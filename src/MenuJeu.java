@@ -62,7 +62,7 @@ public class MenuJeu {
         boutonQuitter.setForeground(Color.white);
         boutonQuitter.setFont(new Font("Arial", Font.BOLD, 20));
 
-        boutonQuitter.addActionListener(e -> quitter(frame));
+        boutonQuitter.addActionListener(_ -> quitter(frame));
 
 
         //Bouton regle : 
@@ -75,7 +75,7 @@ public class MenuJeu {
         boutonRegle.setFont(new Font("Arial", Font.BOLD, 20));
 
         RegleDuJeu regleDuJeu = new RegleDuJeu();
-        boutonRegle.addActionListener(e -> { try{ regleDuJeu.afficherRegle(); } catch (Exception ex) {
+        boutonRegle.addActionListener(_ -> { try{ regleDuJeu.afficherRegle(); } catch (Exception ex) {
             JOptionPane.showMessageDialog(
             null,
             "Erreur : affichage des regles : " + ex.getMessage(),
@@ -97,7 +97,7 @@ public class MenuJeu {
         boutonChoixJoueur.setBorder(BorderFactory.createLineBorder(new Color(88, 88, 88 ), 6));
         boutonChoixJoueur.setFont(new Font("Arial", Font.BOLD, 35));
 
-        boutonChoixJoueur.addActionListener(e -> selectionJoueurBoutonChoixJoueur(boutonChoixJoueur));
+        boutonChoixJoueur.addActionListener(_ -> selectionJoueurBoutonChoixJoueur(boutonChoixJoueur));
 
 
 
@@ -111,7 +111,7 @@ public class MenuJeu {
         boutonChoixCarte.setBorder(BorderFactory.createLineBorder(new Color(88, 88, 88 ), 6));
         boutonChoixCarte.setFont(new Font("Arial", Font.BOLD, 35));
 
-        boutonChoixCarte.addActionListener(e -> selectionCartesBoutonChoixCartes(boutonChoixCarte));
+        boutonChoixCarte.addActionListener(_ -> selectionCartesBoutonChoixCartes(boutonChoixCarte));
 
         //bouton valider/lancer :
 
@@ -122,7 +122,7 @@ public class MenuJeu {
         boutonLancer.setForeground(Color.white);
         boutonLancer.setFont(new Font("Arial", Font.BOLD, 28));
 
-        boutonLancer.addActionListener(e -> actionBoutonLancerPartie());
+        boutonLancer.addActionListener(_ -> actionBoutonLancerPartie());
 
         //ajout des composant : 
 
@@ -142,9 +142,9 @@ public class MenuJeu {
     //methodes 
 
 
-
+    //methodes pour quitte le jeu 
     private static void quitter(JFrame frame) {
-        int choix = JOptionPane.showConfirmDialog(
+        int choix = JOptionPane.showConfirmDialog( //demande confirmation
             frame,
             "Voulez-vous vraiment quitter ?",
             "Confirmation",
@@ -156,7 +156,7 @@ public class MenuJeu {
     }
 
 
-
+    //methodes pour selectioner le nombre de joueur voulue 
     private void selectionJoueurBoutonChoixJoueur(JComboBox<String> comboBox) {
         String selectedOption = (String) comboBox.getSelectedItem(); //recupere l'option selectionée
     
@@ -173,6 +173,7 @@ public class MenuJeu {
         }
     }
 
+     //methodes pour selectioner le nombres de cartes voulue 
     private void selectionCartesBoutonChoixCartes(JComboBox<String> comboBox) {
         String selectedOption = (String) comboBox.getSelectedItem(); //Meme methodes que la selection de joueur
     
@@ -189,6 +190,7 @@ public class MenuJeu {
         }
     }
 
+    //methodes du bouton lancer
     private void actionBoutonLancerPartie() {
         try {
         Partie partie = new Partie(nombreJoueur, nombreCarte); //creation partie avec le nombres d'elements choisis
