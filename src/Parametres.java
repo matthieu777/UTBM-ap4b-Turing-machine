@@ -33,7 +33,7 @@ public class Parametres {
         boutonPause.setBorder(BorderFactory.createLineBorder(new Color(252, 187, 0  ), 3));
         boutonPause.setForeground(Color.WHITE);
 
-        boutonPause.addActionListener(_ -> timer.pause());
+        boutonPause.addActionListener(e -> timer.pause());
 
         //bouton relancer timer
 
@@ -43,7 +43,7 @@ public class Parametres {
         boutonRelancer.setBorder(BorderFactory.createLineBorder(new Color(139, 234, 0   ), 3));
         boutonRelancer.setForeground(Color.WHITE);
 
-        boutonRelancer.addActionListener(_ -> timer.relancer());
+        boutonRelancer.addActionListener(e -> timer.relancer());
 
         // parametres joueur : 
 
@@ -70,7 +70,7 @@ public class Parametres {
         boutonFermer.setBorder(BorderFactory.createLineBorder(new Color(181, 44, 44  ), 3));
         boutonFermer.setForeground(Color.WHITE);
 
-        boutonFermer.addActionListener(_ -> {
+        boutonFermer.addActionListener(e -> {
             // Récupérer le nouveau nom du champ de texte
             String nouveauNom = changerNomJoueurTextField.getText();
 

@@ -90,7 +90,7 @@ public class Problem_4_cartes extends Problem {
             panneau.add(radioButton);
 
             final int index = i; //stock l'index de la carte selectioner
-            radioButton.addActionListener(_ -> {
+            radioButton.addActionListener(e -> {
                 if (radioButton.isSelected()) { //si un radio bouton est selectioner
                     
                     selectedCarteId = idcartes[index]; //recuper l'id de la carte selectioner avec le radio bouton
@@ -115,7 +115,7 @@ public class Problem_4_cartes extends Problem {
         return new JComponent[]{panneau};
     }
     
-    //getter pour recuper le code reponse
+    //getter pour recuperer le code reponse
         @Override
     public int[] getCode()
     {

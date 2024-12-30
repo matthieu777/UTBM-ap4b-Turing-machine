@@ -63,7 +63,7 @@ public class Partie {
         boutonQuitter.setForeground(Color.white);
         boutonQuitter.setFont(new Font("Arial", Font.BOLD, 20));
 
-        boutonQuitter.addActionListener( _ -> quitter(framePartie,timer,problem));
+        boutonQuitter.addActionListener( e -> quitter(framePartie,timer,problem));
 
         //Bouton selection joueur :
 
@@ -76,7 +76,7 @@ public class Partie {
         boutonChoixJoueur.setBorder(BorderFactory.createLineBorder(new Color(88, 88, 88 ), 6));
         boutonChoixJoueur.setFont(new Font("Arial", Font.BOLD, 30));
 
-        boutonChoixJoueur.addActionListener( _ -> selectionJoueurBoutonChoixJoueurs(boutonChoixJoueur, choixJoueur));
+        boutonChoixJoueur.addActionListener( e -> selectionJoueurBoutonChoixJoueurs(boutonChoixJoueur, choixJoueur));
 
         //affichage nombre d'essaie
 
@@ -95,7 +95,7 @@ public class Partie {
  
         Parametres parametres = new Parametres();
  
-        boutonParametre.addActionListener( _ -> { try{ parametres.afficherParametres(timer, joueurSelectionne, boutonChoixJoueur, this); } catch (Exception ex) {
+        boutonParametre.addActionListener( e -> { try{ parametres.afficherParametres(timer, joueurSelectionne, boutonChoixJoueur, this); } catch (Exception ex) {
             JOptionPane.showMessageDialog(
             null,
             "Erreur : affichage des parametres : " + ex.getMessage(),
@@ -132,7 +132,7 @@ public class Partie {
         boutonVerif.setBorder(BorderFactory.createLineBorder(new Color(38, 120, 4  ), 6));
         boutonVerif.setFont(new Font("Arial", Font.BOLD, 28));
         boutonVerif.setForeground(Color.white);
-        boutonVerif.addActionListener( _ -> methodeButonVerification(framePartie, codeField1, codeField2, codeField3,timer));
+        boutonVerif.addActionListener( e -> methodeButonVerification(framePartie, codeField1, codeField2, codeField3,timer));
         
         //ajout des composants à la frame 
        
@@ -208,7 +208,7 @@ public class Partie {
             int [] coderecup=problem.getCode();
             int choix2 = JOptionPane.showOptionDialog(
                 framePartie,
-                "La solution etait : "+ coderecup[0]+ coderecup[1]+ coderecup[2] , //affichafe code reponse
+                "La solution etait : "+ coderecup[0]+ coderecup[1]+ coderecup[2] , //affichage code reponse
                 "Solution",
                 JOptionPane.DEFAULT_OPTION, 
                 JOptionPane.INFORMATION_MESSAGE,
