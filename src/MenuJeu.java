@@ -62,7 +62,7 @@ public class MenuJeu {
         boutonQuitter.setForeground(Color.white);
         boutonQuitter.setFont(new Font("Arial", Font.BOLD, 20));
 
-        boutonQuitter.addActionListener(_ -> quitter(frame));
+        boutonQuitter.addActionListener(e -> quitter(frame));
 
 
         //Bouton regle : 
@@ -75,7 +75,7 @@ public class MenuJeu {
         boutonRegle.setFont(new Font("Arial", Font.BOLD, 20));
 
         RegleDuJeu regleDuJeu = new RegleDuJeu();
-        boutonRegle.addActionListener(_ -> { try{ regleDuJeu.afficherRegle(); } catch (Exception ex) {
+        boutonRegle.addActionListener(e -> { try{ regleDuJeu.afficherRegle(); } catch (Exception ex) {
             JOptionPane.showMessageDialog(
             null,
             "Erreur : affichage des regles : " + ex.getMessage(),
@@ -97,7 +97,7 @@ public class MenuJeu {
         boutonChoixJoueur.setBorder(BorderFactory.createLineBorder(new Color(88, 88, 88 ), 6));
         boutonChoixJoueur.setFont(new Font("Arial", Font.BOLD, 35));
 
-        boutonChoixJoueur.addActionListener(_ -> selectionJoueurBoutonChoixJoueur(boutonChoixJoueur));
+        boutonChoixJoueur.addActionListener(e -> selectionJoueurBoutonChoixJoueur(boutonChoixJoueur));
 
 
 
@@ -111,7 +111,7 @@ public class MenuJeu {
         boutonChoixCarte.setBorder(BorderFactory.createLineBorder(new Color(88, 88, 88 ), 6));
         boutonChoixCarte.setFont(new Font("Arial", Font.BOLD, 35));
 
-        boutonChoixCarte.addActionListener(_ -> selectionCartesBoutonChoixCartes(boutonChoixCarte));
+        boutonChoixCarte.addActionListener(e -> selectionCartesBoutonChoixCartes(boutonChoixCarte));
 
         //bouton valider/lancer :
 
@@ -122,7 +122,7 @@ public class MenuJeu {
         boutonLancer.setForeground(Color.white);
         boutonLancer.setFont(new Font("Arial", Font.BOLD, 28));
 
-        boutonLancer.addActionListener(_ -> actionBoutonLancerPartie());
+        boutonLancer.addActionListener(e -> actionBoutonLancerPartie());
 
         //ajout des composant : 
 
