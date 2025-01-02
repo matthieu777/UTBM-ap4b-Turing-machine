@@ -1,4 +1,8 @@
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
+
+
 import javax.swing.*;
 
 public class MenuJeu {
@@ -137,8 +141,6 @@ public class MenuJeu {
         frame.setVisible(true);
     }
 
-
-    
     //methodes 
 
 
