@@ -24,7 +24,7 @@ public class CarteCritere {
 
    public JComponent[] afficherCarte(int x, int y) {
     
-        // carre/carte avec un contoure arrondie : 
+        // carre/carte avec un contour arrondie : 
 
         JPanel carre = new JPanel(){
             @Override

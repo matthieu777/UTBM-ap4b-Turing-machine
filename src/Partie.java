@@ -235,12 +235,12 @@ public class Partie {
 
     private void methodeButonVerification(JFrame framePartie,JTextField codeField1, JTextField codeField2, JTextField codeField3, TimerHorloge timer) {
 
-        //rzcuperation des 3 nombre entrer par l'utilisateur
+        //recuperation des 3 nombres entrés par l'utilisateur
         String text1 = codeField1.getText().trim();
         String text2 = codeField2.getText().trim();
         String text3 = codeField3.getText().trim();
         
-        //recuperation de la carte selectioner
+        //recuperation de la carte selectionnée
         int idcartesselectioner = problem.getCartesSelectionne();
 
         // verification si on a bien les 3 chiffres de rempli et si on a bien une carte selectioner
