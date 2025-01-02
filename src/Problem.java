@@ -32,7 +32,7 @@ public abstract class Problem {
     public int genererandom(int x) {
         int nombre;
         Random rand = new Random();
-        nombre = rand.nextInt(x);  // Genere une nombre entre 0 et x-1
+        nombre = rand.nextInt(x);  // Genere une nombre entre 0 et x
         return nombre;
     }
 
