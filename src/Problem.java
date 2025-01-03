@@ -30,10 +30,15 @@ public abstract class Problem {
 
     //methode pour generer des nombres random de 0 au nombre donner
     public int genererandom(int x) {
-        int nombre;
-        Random rand = new Random();
-        nombre = rand.nextInt(x);  // Genere une nombre entre 0 et x
-        return nombre;
+        try {
+            int nombre;
+            Random rand = new Random();
+            nombre = rand.nextInt(x);  // Genere une nombre entre 0 et x
+            return nombre;
+        } catch (IllegalArgumentException e) {
+            System.err.println("Erreur de generation de nombres aléatoires : " + e.getMessage());
+            return -1; 
+        }
     }
 
 

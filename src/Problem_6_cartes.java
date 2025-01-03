@@ -20,8 +20,12 @@ public class Problem_6_cartes extends Problem {
     public JComponent[] afficherProbleme(int nbprob) {
         System.out.println("nbprob=" + nbprob);
 
-        probEtId = genererprobid();
-        probEtCode = genererprobcode();
+        try {
+            probEtId = genererprobid();
+            probEtCode = genererprobcode();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Une erreur s'est produite lors de l'affichage du problème : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
 
             //test afficher
             /*************************************************************************** */
@@ -58,12 +62,24 @@ public class Problem_6_cartes extends Problem {
 
         JRadioButton[] buttons = new JRadioButton[idcartes.length];
         for (int i = 0; i < idcartes.length; i++) {
-            CarteCritere carte = BaseDeCartes.getCarte(idcartes[i]);
             int xPosition = i * offsetX;
 
-            JComponent[] composants = carte.afficherCarte(xPosition, offsetY);
-            panneau.add(composants[0]);
-            panneau.add(composants[1]);
+            try {
+                // Recuperer les cartes
+                CarteCritere carte = BaseDeCartes.getCarte(idcartes[i]);
+                if (carte == null) {
+                    throw new NullPointerException("Carte introuvanble pour l'ID: " + idcartes[i]);
+                }
+        
+                JComponent[] composants = carte.afficherCarte(xPosition, offsetY);
+                panneau.add(composants[0]);
+                panneau.add(composants[1]);
+            } catch (NullPointerException ex) {
+                JOptionPane.showMessageDialog(panneau, "Erreur : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                System.out.println("Erreur : Carte avec  l'ID " + idcartes[i] + " introuvable");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(panneau, "Erreur lors de la recuperation des cartes : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
 
             JRadioButton radioButton = new JRadioButton() {
                 @Override
@@ -89,11 +105,15 @@ public class Problem_6_cartes extends Problem {
 
             final int index = i; //stock l'index de la carte selectioner
             radioButton.addActionListener(e -> {
-                if (radioButton.isSelected()) { //si un radio bouton est selectioner
-                    
-                    selectedCarteId = idcartes[index]; //recuper l'id de la carte selectioner avec le radio bouton
-                    System.out.println("Carte sélectionnée avec ID : " + selectedCarteId); //affichage console pour verification
-                    
+                try {
+                    if (radioButton.isSelected()) { //si un radio bouton est selectioner
+                        
+                        selectedCarteId = idcartes[index]; //recuper l'id de la carte selectioner avec le radio bouton
+                        System.out.println("Carte sélectionnée avec ID : " + selectedCarteId); //affichage console pour verification
+                        
+                    }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(panneau, "Erreur lors de la selection d'une carte : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             });
 

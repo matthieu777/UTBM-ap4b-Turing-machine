@@ -25,6 +25,7 @@ public class BaseDeCartes {
         carte.put(16, new CarteCritere("<html> tp ≤ 3h | tp = 3h | tp > 3h</html>", new Critere(16)));
         carte.put(17, new CarteCritere("<html> tp ≤ cm | tp = cm | tp > cm</html>", new Critere(17)));
         carte.put(18, new CarteCritere("<html> le chiffre 1 apparait une seule fois | le chiffre 1 apparait plus d'une fois<html>", new Critere(18)));
+    
     }
     
     //getter pour recuperer une carte a partir d'un id

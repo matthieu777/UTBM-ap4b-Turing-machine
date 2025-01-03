@@ -3,15 +3,22 @@ import java.util.List;
 
 public class GroupeDeJoueur {
 
-    //private int nombreDeJoueurs;
+    
     private final List<Joueur> listDeJoueurs = new ArrayList<>();
 
     //construction du groupe de joueur avec le nombre de joueur voulue
     public GroupeDeJoueur(int nombreDeJoueurs) {
-        //this.nombreDeJoueurs = nombreDeJoueurs;
-        for (int i = 1; i <= nombreDeJoueurs; i++) { //boucle de creation de nouveau joueur 
-            StringBuffer nom = new StringBuffer("       Joueur ").append(i);
-            listDeJoueurs.add(new Joueur(nom, i));
+        try {
+            if (nombreDeJoueurs <= 0) {
+                throw new IllegalArgumentException("Le nombre de joueurs doit être supérieur 0 : " + nombreDeJoueurs);
+            }
+            for (int i = 1; i <= nombreDeJoueurs; i++) { //boucle de creation de nouveau joueur 
+                StringBuffer nom = new StringBuffer("       Joueur ").append(i);
+                listDeJoueurs.add(new Joueur(nom, i));
+            }
+        } catch (IllegalArgumentException e) {
+            System.err.println("Erreur lors de la création du groupe : " + e.getMessage());
+            throw e;
         }
     }
 
@@ -31,18 +38,27 @@ public class GroupeDeJoueur {
 
     //verification si tout les joeurs sont a 3 essaie ou non
     public boolean groupePeutJouer() {
-        for (Joueur joueur : listDeJoueurs) {
-            if (joueur.autorisationJouer()) {
-                return true; // si un joueur peut encore jouer
+        try {
+            for (Joueur joueur : listDeJoueurs) {
+                if (joueur.autorisationJouer()) {
+                    return true; // si un joueur peut encore jouer
+                }
             }
+            return false; //si tout les joueur on jouer
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la verification de l'autorisation de jouer du groupe : " + e.getMessage());
+            return false; 
         }
-        return false; //si tout les joueur on jouer
     }
 
     //methodes pour remetre à 0 le nombre d'essaie de tous les joueurs
     public void reinitialiserEssais() {
-        for (Joueur joueur : listDeJoueurs) {
-            joueur.setNbrEssaie(0);
+        try {
+            for (Joueur joueur : listDeJoueurs) {
+                joueur.setNbrEssaie(0);
+            }
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la remise à 0 des essais du groupe : " + e.getMessage());
         }
     }
 }

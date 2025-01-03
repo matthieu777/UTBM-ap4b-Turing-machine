@@ -33,7 +33,13 @@ public class Parametres {
         boutonPause.setBorder(BorderFactory.createLineBorder(new Color(252, 187, 0  ), 3));
         boutonPause.setForeground(Color.WHITE);
 
-        boutonPause.addActionListener(e -> timer.pause());
+        boutonPause.addActionListener(e -> {
+            try {
+                timer.pause();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(frameParametres, "Erreur lors de la pause du timer : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+        });
 
         //bouton relancer timer
 
@@ -43,7 +49,13 @@ public class Parametres {
         boutonRelancer.setBorder(BorderFactory.createLineBorder(new Color(139, 234, 0   ), 3));
         boutonRelancer.setForeground(Color.WHITE);
 
-        boutonRelancer.addActionListener(e -> timer.relancer());
+        boutonRelancer.addActionListener(e -> {
+            try {
+                timer.relancer();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(frameParametres, "Erreur lors du redemarage du timer : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+        });
 
         // parametres joueur : 
 
@@ -102,7 +114,10 @@ public class Parametres {
         
         
 
-  
-        frameParametres.setVisible(true);
+        try {
+            frameParametres.setVisible(true);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(frameParametres, "Erreur lors de l'affichage des parametres : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

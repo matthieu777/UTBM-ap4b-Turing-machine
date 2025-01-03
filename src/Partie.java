@@ -14,11 +14,17 @@ public class Partie {
     private int nbprob;
     private final int[] codeEntrer = new int[3];
     private JLabel texteNbrEssaie;
+    private JLabel texteNbrTotalEssaie;
+    private JLabel texteNombreDeTour;
+    private int cmptTotalessaies;
+    private int nombreDeTour;
 
 
     public Partie(int nombreJoueur, int nombreCarte) {
         this.nombreJoueur = nombreJoueur;
         this.nombreCarte = nombreCarte;
+        this.cmptTotalessaies = 0;
+        this.nombreDeTour = 0;
         this.choixJoueur = new GroupeDeJoueur(nombreJoueur);
         this.joueurSelectionne = choixJoueur.getListDeJoueurs().get(0);
     }
@@ -89,9 +95,17 @@ public class Partie {
 
         //affichage nombre d'essaie
 
-        texteNbrEssaie = new JLabel("Nombre essaie : "+ joueurSelectionne.getnbrEssaie() +"/3");
+        texteNbrEssaie = new JLabel("Nombre d'essaies du joueur : "+ joueurSelectionne.getnbrEssaie() +"/3");
         texteNbrEssaie.setBounds(120, 610, 300, 50);
         texteNbrEssaie.setFont(new Font("Arial", Font.BOLD, 15));
+
+        texteNbrTotalEssaie = new JLabel("Nombre total d'essais dans la partie : "+  cmptTotalessaies );
+        texteNbrTotalEssaie.setBounds(120, 630, 300, 50);
+        texteNbrTotalEssaie.setFont(new Font("Arial", Font.BOLD, 15));
+
+        texteNombreDeTour = new JLabel("Nombre de tour : "+  nombreDeTour );
+        texteNombreDeTour.setBounds(120, 650, 300, 50);
+        texteNombreDeTour.setFont(new Font("Arial", Font.BOLD, 15));
 
         //Bouton parametre : 
 
@@ -166,6 +180,7 @@ public class Partie {
         framePartie.add(boutonVerif);
         framePartie.add(boutonChoixJoueur);
         framePartie.add(texteNbrEssaie);
+        framePartie.add(texteNbrTotalEssaie);
         framePartie.add(codeField1);
         framePartie.add(codeField2);
         framePartie.add(codeField3);
@@ -173,6 +188,7 @@ public class Partie {
         framePartie.add(textecodeField2);
         framePartie.add(textecodeField3);
         framePartie.add(texteTitrecodeField);
+        framePartie.add(texteNombreDeTour);
         
         
         framePartie.setVisible(true);
@@ -190,7 +206,7 @@ public class Partie {
             int indexSelectionne = comboBox.getSelectedIndex(); //recupere l'index du bouton 
             joueurSelectionne = choixJoueur.getListDeJoueurs().get(indexSelectionne); //recupere le nouveau joueur selectioner grace a l'index 
             System.out.println("Joueur selectionne : " + joueurSelectionne.getNom()); //affichage dans la console pour verification
-            texteNbrEssaie.setText("Nombre essai : " + joueurSelectionne.getnbrEssaie() + "/3"); //maj afficahge du nombre d'essaie du joueurs
+            texteNbrEssaie.setText("Nombre d'essaies du joueur : " + joueurSelectionne.getnbrEssaie() + "/3"); //maj afficahge du nombre d'essaie du joueurs
         }
     }
 
@@ -201,7 +217,7 @@ public class Partie {
             return switch (nombreCarte) {
                 case 4 -> {
                     Problem newProblem = new Problem_4_cartes(); //nouveau problem de 4 carte
-                    nbprob = newProblem.genererandom(2); //choix au hasard dans la liste de problem a 4 cartes dans le fichier texte
+                    nbprob = newProblem.genererandom(4); //choix au hasard dans la liste de problem a 4 cartes dans le fichier texte
                     yield newProblem;
                 }
                 case 5 -> {
@@ -296,30 +312,32 @@ public class Partie {
                 //verrifie si le joueur a un nbr d'essaie <3 
                 if (joueurSelectionne.autorisationJouer()) {
         
-                    //Si le joueur joue on augmente son nombre d'essais
-                    joueurSelectionne.augmentationEssai();
-                    texteNbrEssaie.setText("Nombre essai : " + joueurSelectionne.getnbrEssaie() + "/3"); //mise a jour de l'affichage du nombre d'essaie du joueur
         
                     //System.out.println("nombre essai " + joueurSelectionne + ":" + joueurSelectionne.getnbrEssaie()); //affichage console pour test
         
                     //on essaye d'abord si le code entrer par le joueur est le bon
                     if (Arrays.equals(codeEntrer, problem.getCode())) {
 
-                        JOptionPane.showMessageDialog(framePartie, "Felicitation "+ joueurSelectionne.getNom() +" vous avez trouvé la salle mystérieuse de l'UTBM avant les autres!!!! \n Rejoignez la salle pour découvrir ce qui s'y cache \n La partie a durer :"+timer.getTemps());//affichage 
+                        JOptionPane.showMessageDialog(framePartie, "Felicitation "+ joueurSelectionne.getNom() +" vous avez trouvé la salle mystérieuse de l'UTBM avant les autres!!!! \n Rejoignez la salle pour découvrir ce qui s'y cache ! \n La partie a durer : "+timer.getTemps() +" et " +cmptTotalessaies+ " essais ont été effectués." );//affichage victoire
                         framePartie.dispose(); //on quitte la partie en cours donc la frame
 
                     } else { //sinon on interoge la carte avec le code proposer
-                        
+
+                        //Si le joueur joue on augmente son nombre d'essais
+                        joueurSelectionne.augmentationEssai();
+                        texteNbrEssaie.setText("Nombre d'essaies du joueur : " + joueurSelectionne.getnbrEssaie() + "/3"); //mise a jour de l'affichage du nombre d'essaie du joueur
+                        texteNbrTotalEssaie.setText("Nombre total d'essais dans la partie : "+  (++cmptTotalessaies) );
                         Verificateur verificateur = new Verificateur();
                         boolean resVerification = verificateur.verifierCode(codeEntrer, idcartesselectioner); //on interoge le verificateur
                         JOptionPane.showMessageDialog(framePartie, "Résultat de la vérification : " + resVerification); //on affiche a l'utilisateur le resultat de la verifiaction
-
+                        
                     }
         
                 } else if (!joueurSelectionne.autorisationJouer() && !choixJoueur.groupePeutJouer()) { //sinon si le joueur ne peut pas joueur et que aucun joueur peut jouer
                 
                     JOptionPane.showMessageDialog(framePartie, "Tous les joueurs ont fait leurs 3 essais. Reinitialisation des essais. Veuillez rejouez");
-                    choixJoueur.reinitialiserEssais(); //on remets tous les joueurs à 3 essaies
+                    choixJoueur.reinitialiserEssais(); //on remets tous les joueurs à 0 essaies
+                    texteNombreDeTour.setText("Nombre de tour : "+  (++nombreDeTour) );
 
                 } else {
                     //sinon si un joueur du groupe n'a pas 3 essaie et peut jouer on dit au joueur a 3 essaie d'attendre 
