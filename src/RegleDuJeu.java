@@ -4,7 +4,13 @@ import javax.swing.*;
 
 public class RegleDuJeu {
 
-    private final String texteRegles = "les regles : Devinez un code de 3 chiffres"; 
+    private final String texteRegles = "1. Choisir le nombre de joueur.\n" +
+                                        "\n" +
+                                        "2. Choisir le nombre de vérificateur.\n" +
+                                        "\n" +
+                                        "3. Entrer un code à 3 chiffres et choisir une carte critère.\n" +
+                                        "\n" +
+                                        "4. Vérifier le code à l'aide des cartes, si le code est mauvais, recommencer, sinon c'est gagné.\n"; 
 
     public void afficherRegle() {
 
@@ -44,7 +50,7 @@ public class RegleDuJeu {
 
         JTextArea texteRegle = new JTextArea();
         texteRegle.setText(texteRegles);
-        texteRegle.setFont(new Font("Arial", Font.PLAIN, 16));
+        texteRegle.setFont(new Font("Arial", Font.PLAIN, 24));
         texteRegle.setBounds(50, 140, 1100, 500);
         texteRegle.setEditable(false);
         texteRegle.setBorder(BorderFactory.createLineBorder(new Color(21, 141, 241  ), 6));
