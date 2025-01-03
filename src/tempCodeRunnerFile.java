@@ -1,0 +1,1 @@
+JOptionPane.showMessageDialog(null, "Erreur lors de l'ouverture du menu du jeu", "Erreur", JOptionPane.ERROR_MESSAGE);

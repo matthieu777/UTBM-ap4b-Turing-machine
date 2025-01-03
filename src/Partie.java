@@ -43,12 +43,21 @@ public class Partie {
         texteTitre.setFont(new Font("Arial", Font.BOLD, 30));
 
         // affichage d'un timer
-
-        timer = new TimerHorloge();
-        JLabel labelTemps = new JLabel(timer.getTemps());
-        timer.setTimerListener(temps -> SwingUtilities.invokeLater(() -> labelTemps.setText(temps)));
-        labelTemps.setFont(new Font("Arial", Font.BOLD, 40));
-        labelTemps.setBounds(30, 15, 250, 90);
+        try {
+            timer = new TimerHorloge();
+            JLabel labelTemps = new JLabel(timer.getTemps());
+            timer.setTimerListener(temps -> SwingUtilities.invokeLater(() -> labelTemps.setText(temps)));
+            labelTemps.setFont(new Font("Arial", Font.BOLD, 40));
+            labelTemps.setBounds(30, 15, 250, 90);
+            framePartie.add(labelTemps);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(
+                null,
+                "Erreur lors de l'affichage du timer : " + e.getMessage(),
+                "Erreur",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
 
         // affichage du probleme : 
 
@@ -106,21 +115,37 @@ public class Partie {
 
 
         // 3 Champs pour entrer le code :
+
+        JLabel texteTitrecodeField = new JLabel("Votre proposition de salle : ");
+        texteTitrecodeField.setBounds(635, 500, 300, 70);
+        texteTitrecodeField.setFont(new Font("Arial", Font.BOLD, 15));
         
         JTextField codeField1 = new JTextField(1);
-        codeField1.setBounds(600, 550, 50, 70);
+        codeField1.setBounds(650, 550, 50, 70);
         codeField1.setFont(new Font("Arial", Font.BOLD, 28));
         codeField1.setHorizontalAlignment(JTextField.CENTER);
+
+        JLabel textecodeField1 = new JLabel("CM");
+        textecodeField1.setBounds(660, 600, 50, 70);
+        textecodeField1.setFont(new Font("Arial", Font.BOLD, 15));
     
         JTextField codeField2 = new JTextField(1);
-        codeField2.setBounds(660, 550, 50, 70);
+        codeField2.setBounds(710, 550, 50, 70);
         codeField2.setFont(new Font("Arial", Font.BOLD, 28));
         codeField2.setHorizontalAlignment(JTextField.CENTER);
+
+        JLabel textecodeField2 = new JLabel("TD");
+        textecodeField2.setBounds(720, 600, 50, 70);
+        textecodeField2.setFont(new Font("Arial", Font.BOLD, 15));
     
         JTextField codeField3 = new JTextField(1);
-        codeField3.setBounds(720, 550, 50, 70);
+        codeField3.setBounds(770, 550, 50, 70);
         codeField3.setFont(new Font("Arial", Font.BOLD, 28));
         codeField3.setHorizontalAlignment(JTextField.CENTER);
+
+        JLabel textecodeField3 = new JLabel("TP");
+        textecodeField3.setBounds(785, 600, 50, 70);
+        textecodeField3.setFont(new Font("Arial", Font.BOLD, 15));
     
 
         //Bouton pour lancer la verification : 
@@ -133,11 +158,9 @@ public class Partie {
         boutonVerif.setFont(new Font("Arial", Font.BOLD, 28));
         boutonVerif.setForeground(Color.white);
         boutonVerif.addActionListener( e -> methodeButonVerification(framePartie, codeField1, codeField2, codeField3,timer));
-        
         //ajout des composants à la frame 
        
         framePartie.add(texteTitre);
-        framePartie.add(labelTemps);
         framePartie.add(boutonParametre);
         framePartie.add(boutonQuitter);
         framePartie.add(boutonVerif);
@@ -146,6 +169,10 @@ public class Partie {
         framePartie.add(codeField1);
         framePartie.add(codeField2);
         framePartie.add(codeField3);
+        framePartie.add(textecodeField1);
+        framePartie.add(textecodeField2);
+        framePartie.add(textecodeField3);
+        framePartie.add(texteTitrecodeField);
         
         
         framePartie.setVisible(true);
@@ -170,28 +197,38 @@ public class Partie {
     //methodes utiliser pour genere un probleme de la taille voulue dans le menue
 
     public Problem changementProblemNbrCarte(int nombreCarte) {
-        return switch (nombreCarte) {
-            case 4 -> {
-                Problem newProblem = new Problem_4_cartes(); //nouveau problem de 4 carte
-                nbprob = newProblem.genererandom(2); //choix au hasard dans la liste de problem a 4 cartes dans le fichier texte
-                yield newProblem;
-            }
-            case 5 -> {
-                Problem newProblem = new Problem_5_cartes();
-                nbprob = newProblem.genererandom(6);
-                yield newProblem;
-            }
-            case 6 -> {
-                Problem newProblem = new Problem_6_cartes();
-                nbprob = newProblem.genererandom(6);
-                yield newProblem;
-            }
-            default -> {
-                Problem newProblem = new Problem_4_cartes();
-                nbprob = newProblem.genererandom(2);
-                yield newProblem;
-            }
-        };
+        try {
+            return switch (nombreCarte) {
+                case 4 -> {
+                    Problem newProblem = new Problem_4_cartes(); //nouveau problem de 4 carte
+                    nbprob = newProblem.genererandom(2); //choix au hasard dans la liste de problem a 4 cartes dans le fichier texte
+                    yield newProblem;
+                }
+                case 5 -> {
+                    Problem newProblem = new Problem_5_cartes();
+                    nbprob = newProblem.genererandom(6);
+                    yield newProblem;
+                }
+                case 6 -> {
+                    Problem newProblem = new Problem_6_cartes();
+                    nbprob = newProblem.genererandom(6);
+                    yield newProblem;
+                }
+                default -> {
+                    Problem newProblem = new Problem_4_cartes();
+                    nbprob = newProblem.genererandom(2);
+                    yield newProblem;
+                }
+            };
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(
+                null,
+                "Erreur lors de la création du problème : " + e.getMessage(),
+                "Erreur",
+                JOptionPane.ERROR_MESSAGE
+            );
+            return null;
+        }
     }
 
     //methodes pour quitter la partie : 
@@ -234,65 +271,71 @@ public class Partie {
 
 
     private void methodeButonVerification(JFrame framePartie,JTextField codeField1, JTextField codeField2, JTextField codeField3, TimerHorloge timer) {
-
-        //recuperation des 3 nombres entrés par l'utilisateur
-        String text1 = codeField1.getText().trim();
-        String text2 = codeField2.getText().trim();
-        String text3 = codeField3.getText().trim();
-        
-        //recuperation de la carte selectionnée
-        int idcartesselectioner = problem.getCartesSelectionne();
-
-        // verification si on a bien les 3 chiffres de rempli et si on a bien une carte selectioner
-        if ((text1.matches("\\d") && text2.matches("\\d") && text3.matches("\\d")) && (problem.getCartesSelectionne() != -1)) {
+        try{
+            //recuperation des 3 nombres entrés par l'utilisateur
+            String text1 = codeField1.getText().trim();
+            String text2 = codeField2.getText().trim();
+            String text3 = codeField3.getText().trim();
             
-            //on mets a jour le code proposer par le joueur
-            codeEntrer[0] = Integer.parseInt(text1);
-            codeEntrer[1] = Integer.parseInt(text2);
-            codeEntrer[2] = Integer.parseInt(text3);
-    
-            //affichage console du code entrer et de la carte selectioner pour verification 
-            System.out.println("Code entrer : " + codeEntrer[0] + ", " + codeEntrer[1] + ", " + codeEntrer[2]);    
-            System.out.println("Carte selectionner : " + problem.getCartesSelectionne());
+            //recuperation de la carte selectionnée
+            int idcartesselectioner = problem.getCartesSelectionne();
 
+            // verification si on a bien les 3 chiffres de rempli et si on a bien une carte selectioner
+            if ((text1.matches("\\d") && text2.matches("\\d") && text3.matches("\\d")) && (problem.getCartesSelectionne() != -1)) {
                 
-            //verrifie si le joueur a un nbr d'essaie <3 
-            if (joueurSelectionne.autorisationJouer()) {
-    
-                //Si le joueur joue on augmente son nombre d'essais
-                joueurSelectionne.augmentationEssai();
-                texteNbrEssaie.setText("Nombre essai : " + joueurSelectionne.getnbrEssaie() + "/3"); //mise a jour de l'affichage du nombre d'essaie du joueur
-    
-                //System.out.println("nombre essai " + joueurSelectionne + ":" + joueurSelectionne.getnbrEssaie()); //affichage console pour test
-    
-                //on essaye d'abord si le code entrer par le joueur est le bon
-                if (Arrays.equals(codeEntrer, problem.getCode())) {
+                //on mets a jour le code proposer par le joueur
+                codeEntrer[0] = Integer.parseInt(text1);
+                codeEntrer[1] = Integer.parseInt(text2);
+                codeEntrer[2] = Integer.parseInt(text3);
+        
+                //affichage console du code entrer et de la carte selectioner pour verification 
+                System.out.println("Code entrer : " + codeEntrer[0] + ", " + codeEntrer[1] + ", " + codeEntrer[2]);    
+                System.out.println("Carte selectionner : " + problem.getCartesSelectionne());
 
-                    JOptionPane.showMessageDialog(framePartie, "Felicitation "+ joueurSelectionne.getNom() +" vous avez GAGNER!!!! \n La partie a durer :"+timer.getTemps());//affichage 
-                    framePartie.dispose(); //on quitte la partie en cours donc la frame
-
-                } else { //sinon on interoge la carte avec le code proposer
                     
-                    Verificateur verificateur = new Verificateur();
-                    boolean resVerification = verificateur.verifierCode(codeEntrer, idcartesselectioner); //on interoge le verificateur
-                    JOptionPane.showMessageDialog(framePartie, "Résultat de la vérification : " + resVerification); //on affiche a l'utilisateur le resultat de la verifiaction
+                //verrifie si le joueur a un nbr d'essaie <3 
+                if (joueurSelectionne.autorisationJouer()) {
+        
+                    //Si le joueur joue on augmente son nombre d'essais
+                    joueurSelectionne.augmentationEssai();
+                    texteNbrEssaie.setText("Nombre essai : " + joueurSelectionne.getnbrEssaie() + "/3"); //mise a jour de l'affichage du nombre d'essaie du joueur
+        
+                    //System.out.println("nombre essai " + joueurSelectionne + ":" + joueurSelectionne.getnbrEssaie()); //affichage console pour test
+        
+                    //on essaye d'abord si le code entrer par le joueur est le bon
+                    if (Arrays.equals(codeEntrer, problem.getCode())) {
 
+                        JOptionPane.showMessageDialog(framePartie, "Felicitation "+ joueurSelectionne.getNom() +" vous avez trouvé la salle mystérieuse de l'UTBM avant les autres!!!! \n Rejoignez la salle pour découvrir ce qui s'y cache \n La partie a durer :"+timer.getTemps());//affichage 
+                        framePartie.dispose(); //on quitte la partie en cours donc la frame
+
+                    } else { //sinon on interoge la carte avec le code proposer
+                        
+                        Verificateur verificateur = new Verificateur();
+                        boolean resVerification = verificateur.verifierCode(codeEntrer, idcartesselectioner); //on interoge le verificateur
+                        JOptionPane.showMessageDialog(framePartie, "Résultat de la vérification : " + resVerification); //on affiche a l'utilisateur le resultat de la verifiaction
+
+                    }
+        
+                } else if (!joueurSelectionne.autorisationJouer() && !choixJoueur.groupePeutJouer()) { //sinon si le joueur ne peut pas joueur et que aucun joueur peut jouer
+                
+                    JOptionPane.showMessageDialog(framePartie, "Tous les joueurs ont fait leurs 3 essais. Reinitialisation des essais. Veuillez rejouez");
+                    choixJoueur.reinitialiserEssais(); //on remets tous les joueurs à 3 essaies
+
+                } else {
+                    //sinon si un joueur du groupe n'a pas 3 essaie et peut jouer on dit au joueur a 3 essaie d'attendre 
+                    JOptionPane.showMessageDialog(framePartie, "Vous avez déjà fait vos 3 essais. Attendez que les autres joueurs ont terminés");
                 }
-    
-            } else if (!joueurSelectionne.autorisationJouer() && !choixJoueur.groupePeutJouer()) { //sinon si le joueur ne peut pas joueur et que aucun joueur peut jouer
-               
-                JOptionPane.showMessageDialog(framePartie, "Tous les joueurs ont fait leurs 3 essais. Reinitialisation des essais. Veuillez rejouez");
-                choixJoueur.reinitialiserEssais(); //on remets tous les joueurs à 3 essaies
-
-            } else {
-                //sinon si un joueur du groupe n'a pas 3 essaie et peut jouer on dit au joueur a 3 essaie d'attendre 
-                JOptionPane.showMessageDialog(framePartie, "Vous avez déjà fait vos 3 essais. Attendez que les autres joueurs ont terminés");
+        
+            } else { //sinon si on a pas 3 chiffres corect et une carte selectioner :
+                JOptionPane.showMessageDialog(null, "Veuillez entrer un code valide et/ou selectionner une carte à interoger", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
-    
-        } else { //sinon si on a pas 3 chiffres corect et une carte selectioner :
-            JOptionPane.showMessageDialog(null, "Veuillez entrer un code valide et/ou selectionner une carte à interoger", "Erreur", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(
+                framePartie,
+                "Erreur lors de la vérification du code : " + e.getMessage(),
+                "Erreur",
+                JOptionPane.ERROR_MESSAGE
+            );
         }
     }
-    
-
 }

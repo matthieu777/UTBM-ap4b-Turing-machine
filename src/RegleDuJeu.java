@@ -63,6 +63,7 @@ public class RegleDuJeu {
  
     //methodes :
     
+    //methode pour revenir au menu du jeu (fermer la page regle)
     private static void retour(JFrame frame) {
         frame.dispose();
     }

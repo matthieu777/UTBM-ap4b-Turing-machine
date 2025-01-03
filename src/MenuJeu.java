@@ -1,8 +1,4 @@
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
-
-
 import javax.swing.*;
 
 public class MenuJeu {
@@ -169,8 +165,9 @@ public class MenuJeu {
                 nombreJoueur = Integer.parseInt(partieNombreJoueur[0].trim()); //convertie en int et supprime les espaces
                 System.out.println("Nbr de joueurs : " + nombreJoueur); //affichage dans la console pour verification
             }
-            } catch (NumberFormatException e) { System.err.println("Erreur : format selection joueurs");
-            JOptionPane.showMessageDialog(null, "Erreur avec la selection du nombre de joueurs", "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (NumberFormatException e) { 
+                System.err.println("Erreur : format selection joueurs");
+                JOptionPane.showMessageDialog(null, "Erreur avec la selection du nombre de joueurs", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -186,8 +183,9 @@ public class MenuJeu {
                 nombreCarte = Integer.parseInt(partieNombreCarte[0].trim());
                 System.out.println("Nbr de cartes : " + nombreCarte); 
             }
-            } catch (NumberFormatException e) { System.err.println("Erreur : format selection cartes");
-            JOptionPane.showMessageDialog(null, "Erreur avec la selection du nombre de cartes", "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (NumberFormatException e) {
+                System.err.println("Erreur : format selection cartes");
+                JOptionPane.showMessageDialog(null, "Erreur avec la selection du nombre de cartes", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
