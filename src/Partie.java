@@ -217,22 +217,22 @@ public class Partie {
             return switch (nombreCarte) {
                 case 4 -> {
                     Problem newProblem = new Problem_4_cartes(); //nouveau problem de 4 carte
-                    nbprob = newProblem.genererandom(4); //choix au hasard dans la liste de problem a 4 cartes dans le fichier texte
+                    nbprob = newProblem.genererandom(5); //choix au hasard dans la liste de problem a 4 cartes dans le fichier texte
                     yield newProblem;
                 }
                 case 5 -> {
                     Problem newProblem = new Problem_5_cartes();
-                    nbprob = newProblem.genererandom(6);
+                    nbprob = newProblem.genererandom(5);
                     yield newProblem;
                 }
                 case 6 -> {
                     Problem newProblem = new Problem_6_cartes();
-                    nbprob = newProblem.genererandom(6);
+                    nbprob = newProblem.genererandom(4);
                     yield newProblem;
                 }
                 default -> {
                     Problem newProblem = new Problem_4_cartes();
-                    nbprob = newProblem.genererandom(2);
+                    nbprob = newProblem.genererandom(5);
                     yield newProblem;
                 }
             };
