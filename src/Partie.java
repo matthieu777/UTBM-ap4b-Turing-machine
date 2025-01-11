@@ -205,7 +205,7 @@ public class Partie {
 
         if (selectedOption != null && !selectedOption.isEmpty()) { // si la selection n'est pas vide 
             int indexSelectionne = comboBox.getSelectedIndex(); //recupere l'index du bouton 
-            joueurSelectionne = (Joueur) choixJoueur.getListDeJoueurs().get(indexSelectionne); //recupere le nouveau joueur selectioner grace a l'index 
+            joueurSelectionne = choixJoueur.getListDeJoueurs().get(indexSelectionne); //recupere le nouveau joueur selectioner grace a l'index 
             System.out.println("Joueur selectionne : " + joueurSelectionne.getNom()); //affichage dans la console pour verification
             texteNbrEssaie.setText("Nombre d'essaies du joueur : " + joueurSelectionne.getnbrEssaie() + "/3"); //maj afficahge du nombre d'essaie du joueurs
         }
