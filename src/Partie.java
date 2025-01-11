@@ -27,11 +27,12 @@ public class Partie {
         this.nombreDeTour = 0;
         this.choixJoueur = new GroupeDeJoueur(nombreJoueur);
         this.joueurSelectionne = choixJoueur.getListDeJoueurs().get(0);
+        this.problem = changementProblemNbrCarte(nombreCarte);
     }
 
     public void afficherPartie() {
 
-        problem = changementProblemNbrCarte(nombreCarte); //on initialise un probleme de la taille voulue
+        
         
         //frame principale : 
 
@@ -212,7 +213,7 @@ public class Partie {
 
     //methodes utiliser pour genere un probleme de la taille voulue dans le menue
 
-    public Problem changementProblemNbrCarte(int nombreCarte) {
+    public final Problem changementProblemNbrCarte(int nombreCarte) {
         try {
             return switch (nombreCarte) {
                 case 4 -> {
