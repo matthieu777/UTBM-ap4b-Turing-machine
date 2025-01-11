@@ -1,18 +1,23 @@
 ## Getting Started
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+### Description
 
-## Folder Structure
+Ce projet a été créé dans le cadre de l'UV AP4B. Il implémente une version en ligne du jeu de societe "Machine Turing"
 
-The workspace contains two folders by default, where:
+### Prérequis
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+Avant de lancer le projet, assurez-vous d'avoir installé Java sur votre machine. Vous pouvez vérifier si Java est installé en exécutant la commande suivante dans votre terminal : `java -version`
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+### Lancer le projet
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+1. Téléchargez ce projet sur votre machine.
+2. Ouvrez un terminal dans le dossier principal du projet.
+3. Exécutez la commande suivante pour lancer l'application : `java -jar TuringMachine.jar`.
 
-## Dependency Management
+### Strucutre du projet 
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+Structure du projet : 
+- src/ : Contient les fichiers source du projet (les fichiers .java).
+- bin/ : Contient les fichiers compilés .class.
+- TuringMachine.jar : Le fichier exécutable contenant le projet prêt à être lancé.
+- README.md : Ce fichier, qui décrit le projet et comment l'utiliser.
