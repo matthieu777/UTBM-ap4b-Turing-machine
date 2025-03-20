@@ -4,6 +4,10 @@
 
 Ce projet a été créé dans le cadre de l'UV AP4B. Il implémente une version en ligne du jeu de societe "Machine Turing"
 
+### Language
+
+Langage du projet : JAVA
+
 ### Prérequis
 
 Avant de lancer le projet, assurez-vous d'avoir installé Java sur votre machine. Vous pouvez vérifier si Java est installé en exécutant la commande suivante dans votre terminal : `java -version`
