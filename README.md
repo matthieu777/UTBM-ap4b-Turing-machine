@@ -5,9 +5,9 @@
 Ce projet a été créé dans le cadre de l'UV AP4B. Il implémente une version en ligne du jeu de societe "Machine Turing". 
 Plus de détails sont à retrouver dans "Rapport AP4B".
 
-### Language
+### Langage
 
-Language du projet : JAVA
+Langage du projet : JAVA
 
 ### Prérequis
 
