@@ -2,7 +2,8 @@
 
 ### Description
 
-Ce projet a été créé dans le cadre de l'UV AP4B. Il implémente une version en ligne du jeu de societe "Machine Turing"
+Ce projet a été créé dans le cadre de l'UV AP4B. Il implémente une version en ligne du jeu de societe "Machine Turing". 
+Plus de détails sont à retrouver dans "Rapport AP4B".
 
 ### Language
 
@@ -25,3 +26,13 @@ Structure du projet :
 - bin/ : Contient les fichiers compilés .class.
 - TuringMachine.jar : Le fichier exécutable contenant le projet prêt à être lancé.
 - README.md : Ce fichier, qui décrit le projet et comment l'utiliser.
+
+### Voici des photos du projet final : 
+
+![image](https://github.com/user-attachments/assets/987dc4bc-6c69-46cb-bea9-96b8b79c953f)
+![image](https://github.com/user-attachments/assets/d7b6a11b-40c4-4b45-8a0a-f4cbc2f9f594)
+![image](https://github.com/user-attachments/assets/81f24a95-d97b-4e28-ac64-295d593d3e22)
+
+
+
+
