@@ -7,7 +7,7 @@ Plus de détails sont à retrouver dans "Rapport AP4B".
 
 ### Language
 
-Langage du projet : JAVA
+Language du projet : JAVA
 
 ### Prérequis
 
