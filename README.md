@@ -2,7 +2,7 @@
 
 ### Description
 
-Ce projet a été créé dans le cadre de l'UV AP4B. Il implémente une version en ligne du jeu de societe "Machine Turing". 
+Ce projet a été créé dans le cadre de l'UV AP4B durant la 1re année d’école d’ingénieur à l’UTBM. Il implémente une version en ligne du jeu de societe "Machine Turing". 
 Plus de détails sont à retrouver dans "Rapport AP4B".
 
 ### Langage
